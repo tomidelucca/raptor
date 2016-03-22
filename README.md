@@ -1,1 +1,5 @@
-# raptor
+# Raptor
+
+A Twitter clone.
+
+**Rawr**.
