@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.models;
 
+import ar.edu.itba.paw.exceptions.IllegalLengthException;
+
 public class Tweet {
 
 	private final static int MAX_LENGTH=256;
@@ -9,9 +11,9 @@ public class Tweet {
 	private final int userID;
 	//TODO private final Date/TimeStamp
 	
-	public Tweet(final String msg, final int id, final int userID) {
+	public Tweet(final String msg, final int id, final int userID) throws IllegalLengthException {
 		if (msg.length()>MAX_LENGTH) {
-			//TODO exceptions
+			throw new IllegalLengthException("A tweet can not have more than "+ MAX_LENGTH +" characters.");
 		}
 		this.msg = msg;
 		this.id = id;
