@@ -37,7 +37,7 @@ public class TweetJDBC implements TweetDAO {
 		args.put("message", msg);
 		jdbcInsert.execute(args);
 
-		return new Tweet(msg, id, userID);
+		return Tweet.CreateTweet(msg, id, userID);
 	}
 
 }
