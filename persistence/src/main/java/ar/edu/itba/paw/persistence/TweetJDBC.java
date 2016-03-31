@@ -37,7 +37,14 @@ public class TweetJDBC implements TweetDAO {
 		args.put("message", msg);
 		jdbcInsert.execute(args);
 
-		return new Tweet(msg, id, userID);
+		Tweet t = null;
+		try {
+			t= new Tweet(msg, id, userID);
+		} catch (IllegalArgumentException e) { // TODO: handle exception
+			
+		}
+		
+		return t;
 	}
 
 }

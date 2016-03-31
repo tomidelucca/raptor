@@ -1,7 +1,5 @@
 package ar.edu.itba.paw.models;
 
-import ar.edu.itba.paw.exceptions.IllegalLengthException;
-
 public class Tweet {
 
 	private final static int MAX_LENGTH=256;
@@ -11,34 +9,21 @@ public class Tweet {
 	private final int userID;
 	//TODO private final Date/TimeStamp
 	
-	public Tweet(final String msg, final int id, final int userID) throws IllegalLengthException {
+	/**
+	 * Create a tweet. 
+	 * 
+	 * @param msg The tweet's message.
+	 * @param id The tweet's ID.
+	 * @param userID The user's ID.
+	 * @throws IllegalArgumentException
+	 */
+	public Tweet(final String msg, final int id, final int userID) throws IllegalArgumentException {
 		if (msg.length()>MAX_LENGTH) {
-			throw new IllegalLengthException("A tweet can not have more than "+ MAX_LENGTH +" characters.");
+			throw new IllegalArgumentException("A tweet can not have more than "+ MAX_LENGTH +" characters.");
 		}
 		this.msg = msg;
 		this.id = id;
 		this.userID = userID;
-	}
-
-	public static int getMaxLength() {
-		return MAX_LENGTH;
-	}
-
-	public String getMsg() {
-		return msg;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public int getUserID() {
-		return userID;
-	}
-
-	@Override
-	public int hashCode() {
-		return id;
 	}
 
 	@Override
@@ -60,4 +45,30 @@ public class Tweet {
 		return "Tweet [" + msg + "]";
 	}
 	
+	/*
+	 * 
+	 * Getters
+	 * 
+	 * */
+
+	public static int getMaxLength() {
+		return MAX_LENGTH;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getUserID() {
+		return userID;
+	}
+
+	@Override
+	public int hashCode() {
+		return id;
+	}
 }

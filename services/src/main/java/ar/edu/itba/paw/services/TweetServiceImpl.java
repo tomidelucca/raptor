@@ -16,7 +16,9 @@ public class TweetServiceImpl implements TweetService {
 
 	@Override
 	public Tweet register(final String msg, final int id, final int userID) {
-		return tweetDAO.create(msg, id, userID);
+		Tweet t = tweetDAO.create(msg, id, userID);
+		//TODO handle null
+		return t;
 	}
 
 	@Override
