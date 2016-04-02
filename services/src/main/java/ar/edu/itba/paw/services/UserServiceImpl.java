@@ -11,10 +11,20 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDAO userDao;
-	
-	@Override
-	public User register(final String username, final String password, final int id) {
-		return userDao.create(username, password, id);
+
+	public User register(String username, String password, String email, String firstName, String lastName) {
+		return null;
 	}
 
+	public User login(String username, String password) {
+		return null;
+	}
+
+	public User getUserWithId(String userId) {
+		return null;
+	}
+
+	public User getUserWithUsername(String username) {
+		return null;
+	}
 }

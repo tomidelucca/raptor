@@ -32,9 +32,8 @@ public class UserJDBC implements UserDAO {
 				+ "username varchar(100)," + "password varchar(100)" + ")");
 	}
 
-	@Override
 	public User create(final String username, final String password,
-			final int id) {
+			final String id) {
 		final Map<String, Object> args = new HashMap<String, Object>();
 		args.put("username", username);
 		args.put("password", password);
