@@ -12,8 +12,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO userDao;
 
-	public User register(String username, String password, String email, String firstName, String lastName) {
-		return null;
+	public User register(String username, String password, String email, String firstName, String lastName, String id) {
+		User user = userDao.create(username, password, email, firstName, lastName, id);
+		//TODO handle null
+		return user;
 	}
 
 	public User login(String username, String password) {
@@ -25,6 +27,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public User getUserWithUsername(String username) {
-		return null;
+		return userDao.getByUsername(username);
 	}
 }

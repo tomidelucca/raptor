@@ -13,7 +13,7 @@ public interface UserService {
 	 * @param lastName the new user's last name
 	 * @return the newly created user
 	 */
-	public User register(final String username, final String password, final String email, final String firstName, final String lastName);
+	public User register(final String username, final String password, final String email, final String firstName, final String lastName, final String id);
 
 	/**
 	 * Logs the user

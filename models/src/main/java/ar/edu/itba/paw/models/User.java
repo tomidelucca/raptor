@@ -5,13 +5,20 @@ public class User {
 	private final String id;
 	private final String username;
 	private final String password;
-	
-	public User(final String username, final String password, final String id) {
+	private final String email;
+	private final String firstName;
+	private final String lastName;
+
+	public User(String username, String password, String email, String firstName, String lastName, String id) {
+		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
-		this.id = id;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -24,4 +31,15 @@ public class User {
 		return password;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
 }
