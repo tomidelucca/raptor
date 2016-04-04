@@ -1,8 +1,17 @@
 package ar.edu.itba.paw.models;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Tweet {
 
 	private final static int MAX_LENGTH=256;
+	private final static String HASHTAG_PATTERN = "(?:\\s|\\A)[##]+([A-Za-z0-9-_]+)";
+	private final static String MENTION_PATTERN = "(?:\\s|\\A)[@]+([A-Za-z0-9-_]+)";
 
 	private final String msg;
 	private final int id;
@@ -25,7 +34,30 @@ public class Tweet {
 		this.id = id;
 		this.userID = userID;
 	}
-
+	
+	public static Map<String, List<String>> getHashtagAndMentions(Tweet t){
+		Map<String, List<String>> results = new HashMap<String, List<String>>();
+		results.put("hashtags", patternFilter(t.msg, HASHTAG_PATTERN, "#"));
+		results.put("mentions", patternFilter(t.msg, MENTION_PATTERN, "@"));
+		return results;
+	}
+	
+	private static List<String> patternFilter(String msg, String pattern, String c) {
+		List<String> ans = new LinkedList<String>();
+	     Pattern pt = Pattern.compile(pattern);
+	     Matcher matcher = pt.matcher(msg);
+	     String result = "";
+	 
+	     while (matcher.find()) {
+	         result = matcher.group();
+	         result = result.replace(" ", "");
+	         String elem = result.replace(c, "");
+	         ans.add(elem);
+	     }
+		
+		return ans;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
