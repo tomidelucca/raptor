@@ -29,8 +29,9 @@ public class TweetServiceImpl implements TweetService {
 
 	@Override
 	public List<Tweet> getTimeline(final int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Tweet> ans = tweetDAO.getTweetsByUserID(id);
+		//TODO handle results
+		return ans;
 	}
 
 	@Override
