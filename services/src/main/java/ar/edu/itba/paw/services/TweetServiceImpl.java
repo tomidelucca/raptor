@@ -27,7 +27,6 @@ public class TweetServiceImpl implements TweetService {
 	public List<Tweet> getTimeline(final String id) {
 		List<Tweet> ans = tweetDAO.getTweetsByUserID(id);
 		if (ans == null) {
-			//TODO handle null (no tweets)
 		}
 		return ans;
 	}
