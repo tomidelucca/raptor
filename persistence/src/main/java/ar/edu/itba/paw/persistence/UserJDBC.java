@@ -91,7 +91,6 @@ public class UserJDBC implements UserDAO {
 	}
 
 	//TODO SQL injection?
-	@Override
 	public User getByUsername(String username) {
 		final List<User> list = jdbcTemplate.query(SQL_GET_BY_USERNAME, userRowMapper, username);
         if (list.isEmpty()) {
@@ -102,7 +101,6 @@ public class UserJDBC implements UserDAO {
 	
 	private static class UserRowMapper implements RowMapper<User> {
 
-        @Override
         public User mapRow(final ResultSet rs, final int rowNum) throws SQLException {
                 return new User(rs.getString(USERNAME), 
                 		rs.getString(PASSWORD),

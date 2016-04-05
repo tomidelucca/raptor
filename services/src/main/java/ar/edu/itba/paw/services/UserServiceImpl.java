@@ -12,6 +12,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO userDao;
 
+	void setUserDao(UserDAO userDao) {
+		this.userDao = userDao;
+	}
+
 	public User register(String username, String password, String email, String firstName, String lastName) {
 		User user = userDao.create(username, password, email, firstName, lastName);
 		//TODO handle null

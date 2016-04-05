@@ -49,7 +49,7 @@ public class TweetJDBC implements TweetDAO {
 				+ "primary key ("+ ID +"))");
 	}
 
-	@Override
+
 	public Tweet create(final String msg, final String userID) {
 		final Map<String, Object> args = new HashMap<String, Object>();
 		String id = randomTweetId();
@@ -64,7 +64,7 @@ public class TweetJDBC implements TweetDAO {
 		}
 	}
 
-	@Override
+
 	public List<Tweet> getTweetsByUserID(final String id) { //TODO update adding retweets
 		List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS, new Object[]{id}, new TweetRowMapper());
 		if( ans.isEmpty() ) {
@@ -95,7 +95,6 @@ public class TweetJDBC implements TweetDAO {
 	
 	private static class TweetRowMapper implements RowMapper<Tweet>{
 
-		@Override
 		public Tweet mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return new Tweet(rs.getString(MESSAGE),rs.getString(ID),rs.getString(USER_ID));
 		}
