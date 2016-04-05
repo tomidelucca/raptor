@@ -58,7 +58,7 @@ public class UserJDBC implements UserDAO {
 
 		int i = 12;
 		while(i>0){
-			userId += characterArray[rand.nextInt(characterArray.length + 1)];
+			userId += characterArray[rand.nextInt(characterArray.length) - 1];
 			i--;
 		}
 
