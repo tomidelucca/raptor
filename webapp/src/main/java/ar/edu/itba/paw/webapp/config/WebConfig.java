@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
@@ -19,13 +17,16 @@ import org.springframework.web.servlet.view.JstlView;
 		"ar.edu.itba.paw.services", "ar.edu.itba.paw.persistence" })
 @Configuration
 public class WebConfig {
-
+	
+	private final static String PREFIX_WEB_INF = "/WEB-INF/jsp/";
+	private final static String SUFFIX_JSP = ".jsp";
+	
 	@Bean
 	public ViewResolver viewResolver() {
 		final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/jsp/");
-		viewResolver.setSuffix(".jsp");
+		viewResolver.setPrefix(PREFIX_WEB_INF);
+		viewResolver.setSuffix(SUFFIX_JSP);
 
 		return viewResolver;
 	}

@@ -25,6 +25,17 @@ import ar.edu.itba.paw.models.User;
 @Repository
 public class UserJDBC implements UserDAO {
 
+	private static final String USERNAME = "username";
+	private static final String PASSWORD = "password";
+	private static final String EMAIL = "email";
+	private static final String FIRSTNAME = "firstName";
+	private static final String LASTNAME = "lastName";
+	private static final String ID = "id";
+	private static final String USERS = "users";
+	
+	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
+	private static final String SQL_GET_BY_USERNAME = "SELECT * FROM users WHERE username = ? LIMIT 1";
+	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
 	private final UserRowMapper userRowMapper;
@@ -33,15 +44,15 @@ public class UserJDBC implements UserDAO {
 	public UserJDBC(final DataSource ds) {
 		userRowMapper = new UserRowMapper();
 		jdbcTemplate = new JdbcTemplate(ds);
-		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("users");
+		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName(USERS);
 
-		jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users ("
-				+ "username varchar(100)," 
-				+ "password varchar(100),"
-				+ "email varchar(100),"
-				+ "firstName varchar(100),"
-				+ "lastName varchar(100),"
-				+ "id varchar(100)"+ ")");
+		jdbcTemplate.execute(SQL_CREATE_TABLE + USERS +" ("
+				+ USERNAME + " varchar(100)," 
+				+ PASSWORD + " varchar(100),"
+				+ EMAIL + " varchar(100),"
+				+ FIRSTNAME + " varchar(100),"
+				+ LASTNAME + " varchar(100),"
+				+ ID + " varchar(100)"+ ")");
 	}
 
 	/**
@@ -67,21 +78,22 @@ public class UserJDBC implements UserDAO {
 
 	public User create(final String username, final String password, final String email, final String firstName, final String lastName) {
 		final Map<String, Object> args = new HashMap<String, Object>();
-		args.put("username", username);
-		args.put("password", password);
-		args.put("email", email);
-		args.put("firstName", firstName);
-		args.put("lastName", lastName);
+		args.put(USERNAME, username);
+		args.put(PASSWORD, password);
+		args.put(EMAIL, email);
+		args.put(FIRSTNAME, firstName);
+		args.put(LASTNAME, lastName);
         String userId = randomUserId();
-		args.put("id", userId);
+		args.put(ID, userId);
 		jdbcInsert.execute(args);
 
 		return new User(username, password, email, firstName, lastName, userId);
 	}
 
+	//TODO SQL injection?
 	@Override
 	public User getByUsername(String username) {
-		final List<User> list = jdbcTemplate.query("SELECT * FROM users WHERE username = ? LIMIT 1", userRowMapper, username);
+		final List<User> list = jdbcTemplate.query(SQL_GET_BY_USERNAME, userRowMapper, username);
         if (list.isEmpty()) {
                 return null;
         }
@@ -92,12 +104,12 @@ public class UserJDBC implements UserDAO {
 
         @Override
         public User mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-                return new User(rs.getString("username"), 
-                		rs.getString("password"),
-                		rs.getString("email"),
-                		rs.getString("firstName"),
-                		rs.getString("lastName"),
-                		rs.getString("id"));
+                return new User(rs.getString(USERNAME), 
+                		rs.getString(PASSWORD),
+                		rs.getString(EMAIL),
+                		rs.getString(FIRSTNAME),
+                		rs.getString(LASTNAME),
+                		rs.getString(ID));
         }
 }
 }
