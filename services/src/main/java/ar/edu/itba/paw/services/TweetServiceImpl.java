@@ -19,6 +19,8 @@ public class TweetServiceImpl implements TweetService {
 		Tweet t = tweetDAO.create(msg, userID);
 		if(t == null) {
 			//TODO handle null (invalid message)
+		} else {
+			//TODO hashtag and mentions handler
 		}
 		return t;
 	}

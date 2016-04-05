@@ -1,16 +1,11 @@
 package ar.edu.itba.paw.models;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Tweet {
-
-	private final static String HASHTAGS = "hashtags";
-	private final static String MENTIONS = "mentions";
 	
 	private final static String HASHTAG_PATTERN = "(?:\\s|\\A)[##]+([A-Za-z0-9-_]+)";
 	private final static String MENTION_PATTERN = "(?:\\s|\\A)[@]+([A-Za-z0-9-_]+)";
@@ -41,16 +36,23 @@ public class Tweet {
 	}
 	
 	/**
-	 * Get hashtags and mentions from a tweet.
+	 * Get hashtags from a tweet.
 	 * 
 	 * @param msg The tweet's message.
-	 * @return List of hashtags and list of mentinos.
+	 * @return List of hashtags.
 	 */
-	public static Map<String, List<String>> getHashtagAndMentions(String msg){
-		Map<String, List<String>> results = new HashMap<String, List<String>>();
-		results.put(HASHTAGS, patternFilter(msg, HASHTAG_PATTERN, "#"));
-		results.put(MENTIONS, patternFilter(msg, MENTION_PATTERN, "@"));
-		return results;
+	public static List<String> getHashtag(String msg){
+		return patternFilter(msg, HASHTAG_PATTERN, "#");
+	}
+	
+	/**
+	 * Get  mentions from a tweet.
+	 * 
+	 * @param msg The tweet's message.
+	 * @return List of mentinos.
+	 */
+	public static List<String> getMentions(String msg){
+		return patternFilter(msg, MENTION_PATTERN, "@");
 	}
 	
 	/**
@@ -61,7 +63,7 @@ public class Tweet {
 	 * @param c A Special character.
 	 * @return
 	 */
-	private static List<String> patternFilter(String msg, String pattern, String c) {
+	private static List<String> patternFilter(String msg, String pattern, String c) { //TODO SET - NO REPET!
 		List<String> ans = new LinkedList<String>();
 	     Pattern pt = Pattern.compile(pattern);
 	     Matcher matcher = pt.matcher(msg);
