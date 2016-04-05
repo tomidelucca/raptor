@@ -10,7 +10,6 @@ public interface TweetService {
 	 * Store a new Tweet.
 	 * 
 	 * @param msg The tweet's message. 
-	 * @param id The tweet's ID.
 	 * @param userID The user's ID.
 	 * @return The registered tweet.
 	 */
@@ -20,8 +19,8 @@ public interface TweetService {
 	 * Reweets a previous tweet.
 	 * 
 	 * @param tweetID The old tweet's id.
-	 * @param userID  The new tweet user's id.
-	 * @return
+	 * @param userID The new tweet user's id.
+	 * @return The new tweet.
 	 */
 	public Tweet retweet(final String tweetID, final String userID);
 	
