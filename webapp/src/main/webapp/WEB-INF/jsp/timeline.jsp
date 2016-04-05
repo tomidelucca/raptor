@@ -17,31 +17,26 @@
 </head>
 <body>
 <div class="container">
-	<div class="col-md-6 col-centered">
+	<div class="col-md-4 col-centered">
         <div class="row">
             <c:choose>
                 <c:when test="${userExists=='1'}">
-                    <h2>Rawr!</h2>
-                    <div class="col-md-5">
-                        <img src="http://vignette4.wikia.nocookie.net/rickandmorty/images/b/be/Photography_Raptor.png/revision/latest?cb=20150821214726" style="height:200px;"/>
-                        <p>Hi, ${username}</p>
-                    </div>
-                    <div class="col-md-7">
-                        <div>
-                            <label>User Id: </label>
-                            <p>${userId}</p>
+                    <h2><a href="/">RAPTOR</a></h2>
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-md-7 col-md-offset-3" style="margin-top:20px;">
+                                <img src="http://vignette4.wikia.nocookie.net/rickandmorty/images/b/be/Photography_Raptor.png/revision/latest?cb=20150821214726" style="height:200px;"/>
+                            </div>
                         </div>
-                        <div>
-                            <label>Full name: </label>
-                            <p>${firstName} ${lastName}</p>
-                        </div>
-                        <div>
-                            <label>Username: </label>
-                            <p>@${username}</p>
-                        </div>
-                        <div>
-                            <label>Email: </label>
-                            <p>${email}</p>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1" style="text-align:center">
+                                <div>
+                                    <h2>${firstName} ${lastName}</h2>
+                                </div>
+                                <div>
+                                    <h4 style="color:rgb(150,150,150)">@${username}</h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </c:when>
@@ -53,10 +48,9 @@
                 </c:otherwise>
             </c:choose>
         </div>
-        <a href="/" class="btn btn-default">Go home!</a>
     </div>
     <c:if test="${userExists=='1'}">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <h2>Say something!</h2>
         <form class="form-group" action="./${username}/tweetAction" method="post">
             <textarea placeholder="What's going on?" name="message" class="form-control"></textarea>
@@ -70,7 +64,7 @@
                    <h3 class="panel-title">${firstName} ${lastName} - @${username}</h3>
                </div>
              <div class="panel-body">
-               <strong>${tweet.getMsg()}</strong><br/><br/>${date}
+               <strong style="word-wrap:break-word;">${tweet.getMsg()}</strong><br/><br/>${date}
              </div>
            </div>
         </c:forEach>
