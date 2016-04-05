@@ -11,7 +11,6 @@ public class User {
 	private final String miniBio = null;
 
 	public User(String username, String password, String email, String firstName, String lastName, String id) {
-		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;

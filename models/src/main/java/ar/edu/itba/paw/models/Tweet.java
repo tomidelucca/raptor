@@ -9,10 +9,16 @@ import java.util.regex.Pattern;
 
 public class Tweet {
 
-	private final static int MAX_LENGTH=256;
+	private final static String HASHTAGS = "hashtags";
+	private final static String MENTIONS = "mentions";
+	
 	private final static String HASHTAG_PATTERN = "(?:\\s|\\A)[##]+([A-Za-z0-9-_]+)";
 	private final static String MENTION_PATTERN = "(?:\\s|\\A)[@]+([A-Za-z0-9-_]+)";
-
+	
+	private final static int MAX_LENGTH=256;
+	
+	private final static String ERROR_LENGTH = "A tweet can not have more than "+ MAX_LENGTH +" characters.";
+	
 	private final String msg;
 	private final int id;
 	private final int userID;
@@ -28,20 +34,34 @@ public class Tweet {
 	 */
 	public Tweet(final String msg, final int id, final int userID) throws IllegalArgumentException {
 		if (msg.length()>MAX_LENGTH) {
-			throw new IllegalArgumentException("A tweet can not have more than "+ MAX_LENGTH +" characters.");
+			throw new IllegalArgumentException(ERROR_LENGTH);
 		}
 		this.msg = msg;
 		this.id = id;
 		this.userID = userID;
 	}
 	
-	public static Map<String, List<String>> getHashtagAndMentions(Tweet t){
+	/**
+	 * Get hashtags and mentions from a tweet.
+	 * 
+	 * @param msg The tweet's message.
+	 * @return List of hashtags and list of mentinos.
+	 */
+	public static Map<String, List<String>> getHashtagAndMentions(String msg){
 		Map<String, List<String>> results = new HashMap<String, List<String>>();
-		results.put("hashtags", patternFilter(t.msg, HASHTAG_PATTERN, "#"));
-		results.put("mentions", patternFilter(t.msg, MENTION_PATTERN, "@"));
+		results.put(HASHTAGS, patternFilter(msg, HASHTAG_PATTERN, "#"));
+		results.put(MENTIONS, patternFilter(msg, MENTION_PATTERN, "@"));
 		return results;
 	}
 	
+	/**
+	 * Filters a String with a given RegEx.
+	 * 
+	 * @param msg The string to be filtered. 
+	 * @param pattern The RegEx.
+	 * @param c A Special character.
+	 * @return
+	 */
 	private static List<String> patternFilter(String msg, String pattern, String c) {
 		List<String> ans = new LinkedList<String>();
 	     Pattern pt = Pattern.compile(pattern);
@@ -57,7 +77,7 @@ public class Tweet {
 		
 		return ans;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
