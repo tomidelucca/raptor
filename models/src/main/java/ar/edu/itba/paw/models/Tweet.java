@@ -20,9 +20,8 @@ public class Tweet {
 	private final static String ERROR_LENGTH = "A tweet can not have more than "+ MAX_LENGTH +" characters.";
 	
 	private final String msg;
-	private final int id;
-	private final int userID;
-	//TODO private final Date/TimeStamp
+	private final String id;
+	private final String userID;
 	
 	/**
 	 * Create a tweet. 
@@ -32,7 +31,7 @@ public class Tweet {
 	 * @param userID The user's ID.
 	 * @throws IllegalArgumentException
 	 */
-	public Tweet(final String msg, final int id, final int userID) throws IllegalArgumentException {
+	public Tweet(final String msg, final String id, final String userID) throws IllegalArgumentException {
 		if (msg.length()>MAX_LENGTH) {
 			throw new IllegalArgumentException(ERROR_LENGTH);
 		}
@@ -79,6 +78,11 @@ public class Tweet {
 	}
 
 	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -87,7 +91,10 @@ public class Tweet {
 		if (getClass() != obj.getClass())
 			return false;
 		Tweet other = (Tweet) obj;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
@@ -111,16 +118,12 @@ public class Tweet {
 		return msg;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public int getUserID() {
+	public String getUserID() {
 		return userID;
 	}
 
-	@Override
-	public int hashCode() {
-		return id;
-	}
 }

@@ -15,39 +15,43 @@ public class TweetServiceImpl implements TweetService {
 	private TweetDAO tweetDAO;
 
 	@Override
-	public Tweet register(final String msg, final int id, final int userID) {
-		Tweet t = tweetDAO.create(msg, id, userID);
-		//TODO handle null
+	public Tweet register(final String msg, final String userID) {
+		Tweet t = tweetDAO.create(msg, userID);
+		if(t == null) {
+			//TODO handle null (invalid message)
+		}
 		return t;
 	}
 
 	@Override
-	public Tweet retweet(final int tweetID, final int userID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Tweet> getTimeline(final int id) {
+	public List<Tweet> getTimeline(final String id) {
 		List<Tweet> ans = tweetDAO.getTweetsByUserID(id);
-		//TODO handle results
+		if (ans == null) {
+			//TODO handle null (no tweets)
+		}
 		return ans;
 	}
-
+	
 	@Override
-	public List<Tweet> getFeed(final int id) {
+	public Tweet retweet(final String tweetID, final String userID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Tweet> getMentions(final int id) {
+	public List<Tweet> getFeed(final String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Tweet> getFavourites(final int id) {
+	public List<Tweet> getMentions(final String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Tweet> getFavourites(final String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

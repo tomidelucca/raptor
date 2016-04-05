@@ -14,7 +14,7 @@ public interface TweetService {
 	 * @param userID The user's ID.
 	 * @return The registered tweet.
 	 */
-	public Tweet register(final String msg, final int id, final int userID);
+	public Tweet register(final String msg, final String userID);
 	
 	/**
 	 * Reweets a previous tweet.
@@ -23,7 +23,7 @@ public interface TweetService {
 	 * @param userID  The new tweet user's id.
 	 * @return
 	 */
-	public Tweet retweet(final int tweetID, final int userID);
+	public Tweet retweet(final String tweetID, final String userID);
 	
 	
 	/**
@@ -32,7 +32,7 @@ public interface TweetService {
 	 * @param id The user's ID.
 	 * @return The recovered tweets.
 	 */
-	public List<Tweet> getTimeline(final int id);
+	public List<Tweet> getTimeline(final String id);
 	
 	/**
 	 * Get a user's feed tweets.
@@ -40,7 +40,7 @@ public interface TweetService {
 	 * @param id The user's ID.
 	 * @return The recovered feed.
 	 */
-	public List<Tweet> getFeed(final int id);
+	public List<Tweet> getFeed(final String id);
 	
 	/**
 	 * Get a user's mentions.
@@ -48,7 +48,7 @@ public interface TweetService {
 	 * @param id The user's ID.
 	 * @return The recovered mentions.
 	 */
-	public List<Tweet> getMentions(final int id);
+	public List<Tweet> getMentions(final String id);
 	
 	/**
 	 * Get a user's favourites.
@@ -56,7 +56,7 @@ public interface TweetService {
 	 * @param id The user's ID.
 	 * @return The recovered favourites.
 	 */
-	public List<Tweet> getFavourites(final int id);
+	public List<Tweet> getFavourites(final String id);
 	
 	/**
 	 * Get a list of tweets with a hashtag.

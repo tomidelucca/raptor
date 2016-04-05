@@ -19,6 +19,8 @@ public class SignupController {
 	
 	private final static String MAP_SIGNUP = "/signup";
 	private final static String MAP_REGISTER = "/registerUser";
+	private final static String MAP_USER = "/user/";
+	private final static String REDIRECT = "redirect:";
 	
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
@@ -44,6 +46,6 @@ public class SignupController {
 
         User user = userService.register(username, password, email, firstName, lastName);
 
-        return "redirect:" + "/user/" + user.getUsername();
+        return REDIRECT + MAP_USER + user.getUsername();
     }
 }
