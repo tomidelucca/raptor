@@ -8,6 +8,7 @@ public class User {
 	private final String email;
 	private final String firstName;
 	private final String lastName;
+	private final String miniBio = null;
 
 	public User(String username, String password, String email, String firstName, String lastName, String id) {
 		super();

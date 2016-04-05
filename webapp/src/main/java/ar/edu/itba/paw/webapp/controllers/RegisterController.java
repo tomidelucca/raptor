@@ -32,16 +32,4 @@ public class RegisterController {
         
         return "register";
     }
-//	public String saveUser() throws Exception{
-//		String username="lsoncini";
-//		String password="123456";
-//		String firstName="Lucas";
-//		String lastName="Soncini";
-//		String email="lsoncini@itba.edu.ar";
-//		String id="7";
-//		
-//		userService.register(username, password, email, firstName, lastName, id);
-//
-//		return "register";
-//	}
 }

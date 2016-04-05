@@ -15,14 +15,6 @@ public class TimelineController {
 	
 	@Autowired
 	private UserService userService;
-	  
-	@RequestMapping("/")
-	public ModelAndView timeline() {
-		final ModelAndView mav = new ModelAndView("timeline");
-		mav.addObject("greeting", "Rawrrr!");
-		mav.addObject("imageLink", "https://s-media-cache-ak0.pinimg.com/736x/cf/7e/7d/cf7e7db68d7926e96ca586411c1bf9ca.jpg");
-		return mav;
-	}
 	
 	@RequestMapping(value="/user/{username}", method= RequestMethod.GET)
 	public ModelAndView timeline(@PathVariable(value="username") String username) {	
