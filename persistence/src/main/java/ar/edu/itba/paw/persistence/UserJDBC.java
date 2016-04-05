@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.sql.DataSource;
 
@@ -43,18 +44,39 @@ public class UserJDBC implements UserDAO {
 				+ "id varchar(100)"+ ")");
 	}
 
-	public User create(final String username, final String password, final String email, final String firstName, final String lastName, 
-			final String id) {
+	/**
+	 * Sketchy method needed to be replaced
+	 *
+	 * @return a "random" userId
+     */
+
+	private String randomUserId() {
+		String charactersString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + "0123456789";
+		char[] characterArray = charactersString.toCharArray();
+		String userId = "";
+		Random rand = new Random();
+
+		int i = 12;
+		while(i>0){
+			userId += characterArray[rand.nextInt(characterArray.length + 1)];
+			i--;
+		}
+
+		return userId;
+	}
+
+	public User create(final String username, final String password, final String email, final String firstName, final String lastName) {
 		final Map<String, Object> args = new HashMap<String, Object>();
 		args.put("username", username);
 		args.put("password", password);
 		args.put("email", email);
 		args.put("firstName", firstName);
 		args.put("lastName", lastName);
-		args.put("id", id);
+        String userId = randomUserId();
+		args.put("id", userId);
 		jdbcInsert.execute(args);
 
-		return new User(username, password, email, firstName, lastName, id);
+		return new User(username, password, email, firstName, lastName, userId);
 	}
 
 	@Override

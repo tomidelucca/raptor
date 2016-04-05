@@ -12,8 +12,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO userDao;
 
-	public User register(String username, String password, String email, String firstName, String lastName, String id) {
-		User user = userDao.create(username, password, email, firstName, lastName, id);
+	public User register(String username, String password, String email, String firstName, String lastName) {
+		User user = userDao.create(username, password, email, firstName, lastName);
 		//TODO handle null
 		return user;
 	}

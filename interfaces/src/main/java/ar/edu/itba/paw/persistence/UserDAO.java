@@ -16,7 +16,7 @@ public interface UserDAO {
      * @return The created user.
      */
 
-    User create(final String username, final String password, final String email, final String firstName, final String lastName, final String id);
+    User create(final String username, final String password, final String email, final String firstName, final String lastName);
     
     /**
      * 

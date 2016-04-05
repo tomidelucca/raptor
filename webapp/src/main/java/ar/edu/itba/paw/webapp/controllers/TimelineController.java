@@ -20,13 +20,22 @@ public class TimelineController {
 	public ModelAndView timeline(@PathVariable(value="username") String username) {	
 		final ModelAndView mav = new ModelAndView("timeline");
 		User u = userService.getUserWithUsername(username);
-		if(u == null){
-			mav.addObject("greeting", "Ups! The requested user doesn't exist!");
 
-			mav.addObject("imageLink", "http://i.imgur.com/icWJ1Qx.png");
-		}else{
-			mav.addObject("greeting", "Rawrrrr " + u.getFirstName() +" "+ u.getLastName()+ "(@"+ u.getUsername()+")!");
-			mav.addObject("imageLink", "https://s-media-cache-ak0.pinimg.com/736x/cf/7e/7d/cf7e7db68d7926e96ca586411c1bf9ca.jpg");
+		mav.addObject("userExists", u == null);
+
+		if(u != null){
+			mav.addObject("firstName", u.getFirstName());
+			mav.addObject("lastName", u.getLastName());
+			mav.addObject("username", u.getUsername());
+			mav.addObject("email", u.getEmail());
+			mav.addObject("userId", u.getId());
+			int passwordLength = u.getPassword().length();
+			String passwordCount = "";
+			while (passwordLength>0) {
+				passwordCount += "*";
+				passwordLength--;
+			}
+			mav.addObject("passwordCount", passwordCount);
 		}
 		return mav;
 	}
