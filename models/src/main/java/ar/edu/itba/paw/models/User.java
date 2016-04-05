@@ -4,17 +4,15 @@ public class User {
 
 	private final String id;
 	private final String username;
-	private final String password;
 	private final String email;
 	private final String firstName;
 	private final String lastName;
 	private final String miniBio = null;
 
-	public User(String username, String password, String email,
+	public User(String username, String email,
 			String firstName, String lastName, String id) {
 		this.id = id;
 		this.username = username;
-		this.password = password;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -57,10 +55,6 @@ public class User {
 
 	public String getUsername() {
 		return username;
-	}
-
-	public String getPassword() {
-		return password;
 	}
 
 	public String getEmail() {

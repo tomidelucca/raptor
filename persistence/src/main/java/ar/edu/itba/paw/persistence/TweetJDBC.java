@@ -33,7 +33,7 @@ public class TweetJDBC implements TweetDAO {
 	private static final int TIMELINE_SIZE = 10;
 	
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
-	private static final String SQL_GET_TWEETS = "select * from tweets where id = ? LIMIT "+ TIMELINE_SIZE;
+	private static final String SQL_GET_TWEETS = "select * from tweets where userID = ? LIMIT "+ TIMELINE_SIZE;
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
@@ -59,17 +59,15 @@ public class TweetJDBC implements TweetDAO {
 		jdbcInsert.execute(args);
 		try {
 			return new Tweet(msg, id, userID);
-		} catch (IllegalArgumentException e) { 
+		} catch (IllegalArgumentException e) {
 			return null;
 		}
 	}
 
 
 	public List<Tweet> getTweetsByUserID(final String id) { //TODO update adding retweets
-		List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS, new Object[]{id}, new TweetRowMapper());
-		if( ans.isEmpty() ) {
-			return null;
-		}
+		List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS, new TweetRowMapper(), id);
+
 		return ans;
 	}
 
@@ -86,7 +84,7 @@ public class TweetJDBC implements TweetDAO {
 
 		int i = 12;
 		while(i>0){
-			id += characterArray[rand.nextInt(characterArray.length) - 1];
+			id += characterArray[rand.nextInt(characterArray.length)];
 			i--;
 		}
 

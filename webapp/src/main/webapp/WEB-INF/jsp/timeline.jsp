@@ -43,10 +43,6 @@
                             <label>Email: </label>
                             <p>${email}</p>
                         </div>
-                        <div>
-                            <label>Password: </label>
-                            <p>${passwordCount}</p>
-                        </div>
                     </div>
                 </c:when>
                 <c:otherwise>
@@ -59,6 +55,27 @@
         </div>
         <a href="/" class="btn btn-default">Go home!</a>
     </div>
+    <c:if test="${userExists=='1'}">
+    <div class="col-md-6">
+        <h2>Say something!</h2>
+        <form class="form-group" action="./${username}/tweetAction" method="post">
+            <textarea placeholder="What's going on?" name="message" class="form-control"></textarea>
+            <br/>
+            <button type="submit" class="btn btn-success">Rawr</button>
+        </form>
+        <h2>${firstName}'s Timeline</h2>
+        <c:forEach items="${tweetList}" var="tweet">
+           <div class="panel panel-info">
+               <div class="panel-heading">
+                   <h3 class="panel-title">${firstName} ${lastName} - @${username}</h3>
+               </div>
+             <div class="panel-body">
+               <strong>${tweet.getMsg()}</strong><br/><br/>${date}
+             </div>
+           </div>
+        </c:forEach>
+    </div>
+    </c:if>
 </div>
 </body>
 </html>

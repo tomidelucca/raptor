@@ -69,7 +69,7 @@ public class UserJDBC implements UserDAO {
 
 		int i = 12;
 		while(i>0){
-			userId += characterArray[rand.nextInt(characterArray.length) - 1];
+			userId += characterArray[rand.nextInt(characterArray.length)];
 			i--;
 		}
 
@@ -87,7 +87,7 @@ public class UserJDBC implements UserDAO {
 		args.put(ID, userId);
 		jdbcInsert.execute(args);
 
-		return new User(username, password, email, firstName, lastName, userId);
+		return new User(username, email, firstName, lastName, userId);
 	}
 
 	//TODO SQL injection?
@@ -102,8 +102,7 @@ public class UserJDBC implements UserDAO {
 	private static class UserRowMapper implements RowMapper<User> {
 
         public User mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-                return new User(rs.getString(USERNAME), 
-                		rs.getString(PASSWORD),
+                return new User(rs.getString(USERNAME),
                 		rs.getString(EMAIL),
                 		rs.getString(FIRSTNAME),
                 		rs.getString(LASTNAME),
