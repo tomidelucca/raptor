@@ -61,7 +61,6 @@ public class TimelineController {
 			List<Tweet> tweetList = tweetService.getTimeline(u.getId());
 
 			mav.addObject(TWEET_LIST, tweetList);
-			mav.addObject("date", new Date());
 
 		}
 		return mav;

@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.models;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,9 +21,12 @@ public class Tweet {
 	
 	private final static String ERROR_LENGTH = "A tweet can not have more than "+ MAX_LENGTH +" characters.";
 	
+	private final static SimpleDateFormat sdf = new SimpleDateFormat("h:mm a - d MMMM yyyy");
+	
 	private final String msg;
 	private final String id;
 	private final String userID;
+	private final Timestamp timestamp;
 	
 	/**
 	 * Create a tweet. 
@@ -31,13 +36,14 @@ public class Tweet {
 	 * @param userID The user's ID.
 	 * @throws IllegalArgumentException
 	 */
-	public Tweet(final String msg, final String id, final String userID) throws IllegalArgumentException {
+	public Tweet(final String msg, final String id, final String userID, final Timestamp timestamp) throws IllegalArgumentException {
 		if (msg.length()>MAX_LENGTH) {
 			throw new IllegalArgumentException(ERROR_LENGTH);
 		}
 		this.msg = msg;
 		this.id = id;
 		this.userID = userID;
+		this.timestamp = timestamp;
 	}
 	
 	/**
@@ -124,6 +130,10 @@ public class Tweet {
 
 	public String getUserID() {
 		return userID;
+	}
+	
+	public String getTimestamp(){
+		return sdf.format(timestamp);
 	}
 
 }

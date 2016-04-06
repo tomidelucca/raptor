@@ -64,7 +64,7 @@
                    <h3 class="panel-title">${firstName} ${lastName} - @${username}</h3>
                </div>
              <div class="panel-body">
-               <strong style="word-wrap:break-word;">${tweet.getMsg()}</strong><br/><br/>${date}
+               <strong style="word-wrap:break-word;">${tweet.msg}</strong><br/><br/>${tweet.timestamp}
              </div>
            </div>
         </c:forEach>
