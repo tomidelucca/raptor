@@ -14,7 +14,7 @@ public class TweetServiceImpl implements TweetService {
 	@Autowired
 	private TweetDAO tweetDAO;
 
-
+	@Override
 	public Tweet register(final String msg, final String userID) {
 		Tweet t = tweetDAO.create(msg, userID);
 		if(t == null) {
@@ -24,10 +24,12 @@ public class TweetServiceImpl implements TweetService {
 		}
 		return t;
 	}
+	
 	void setTweetDAO(TweetDAO tweetDAO) {
 		this.tweetDAO = tweetDAO;
 	}
 
+	@Override
 	public List<Tweet> getTimeline(final String id) {
 		List<Tweet> ans = tweetDAO.getTweetsByUserID(id);
 		if (ans == null) {
@@ -35,29 +37,31 @@ public class TweetServiceImpl implements TweetService {
 		return ans;
 	}
 
-
+	@Override
 	public Tweet retweet(final String tweetID, final String userID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	@Override
 	public List<Tweet> getFeed(final String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	@Override
 	public List<Tweet> getMentions(final String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public List<Tweet> getFavourites(final String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public List<Tweet> getHashtag(final String hashtag) {
 		// TODO Auto-generated method stub
 		return null;

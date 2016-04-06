@@ -16,20 +16,24 @@ public class UserServiceImpl implements UserService {
 		this.userDao = userDao;
 	}
 
+	@Override
 	public User register(String username, String password, String email, String firstName, String lastName) {
 		User user = userDao.create(username, password, email, firstName, lastName);
 		//TODO handle null
 		return user;
 	}
 
+	@Override
 	public User login(String username, String password) {
 		return null;
 	}
 
+	@Override
 	public User getUserWithId(String userId) {
 		return null;
 	}
 
+	@Override
 	public User getUserWithUsername(String username) {
 		return userDao.getByUsername(username);
 	}

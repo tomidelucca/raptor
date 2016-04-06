@@ -41,6 +41,7 @@ public class HashtagJDBC implements HashtagDAO {
 				+ "primary key ("+ TWEET_ID +"))");
 	}
 
+	@Override
 	public void create(final String hashtag, final String tweetID) {
 		final Map<String, Object> args = new HashMap<String, Object>();
 		args.put(HASHTAG, hashtag);
@@ -48,11 +49,13 @@ public class HashtagJDBC implements HashtagDAO {
 		jdbcInsert.execute(args);
 	}
 
+	@Override
 	public List<String> getTrendingTopics() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
 	public List<Tweet> getTweetsByHashtag(String hashtag) {
 		// TODO Auto-generated method stub
 		return null;
