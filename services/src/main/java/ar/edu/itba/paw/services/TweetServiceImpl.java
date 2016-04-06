@@ -13,6 +13,10 @@ public class TweetServiceImpl implements TweetService {
 
 	@Autowired
 	private TweetDAO tweetDAO;
+	
+	void setTweetDAO(TweetDAO tweetDAO) {
+		this.tweetDAO = tweetDAO;
+	}
 
 	@Override
 	public Tweet register(final String msg, final String userID) {
@@ -25,14 +29,11 @@ public class TweetServiceImpl implements TweetService {
 		return t;
 	}
 	
-	void setTweetDAO(TweetDAO tweetDAO) {
-		this.tweetDAO = tweetDAO;
-	}
-
 	@Override
 	public List<Tweet> getTimeline(final String id) {
 		List<Tweet> ans = tweetDAO.getTweetsByUserID(id);
 		if (ans == null) {
+			//TODO handle null (db error)
 		}
 		return ans;
 	}

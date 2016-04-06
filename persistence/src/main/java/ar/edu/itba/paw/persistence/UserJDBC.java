@@ -10,6 +10,7 @@ import java.util.Random;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -45,7 +46,7 @@ public class UserJDBC implements UserDAO {
 		userRowMapper = new UserRowMapper();
 		jdbcTemplate = new JdbcTemplate(ds);
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName(USERS);
-
+		try {
 		jdbcTemplate.execute(SQL_CREATE_TABLE + USERS +" ("
 				+ USERNAME + " varchar(100)," 
 				+ PASSWORD + " varchar(100),"
@@ -53,6 +54,9 @@ public class UserJDBC implements UserDAO {
 				+ FIRSTNAME + " varchar(100),"
 				+ LASTNAME + " varchar(100),"
 				+ ID + " varchar(100)"+ ")");
+		} catch (DataAccessException e) {
+			//TODO db error
+		}
 	}
 
 	/**
@@ -94,10 +98,10 @@ public class UserJDBC implements UserDAO {
 	//TODO SQL injection?
 	@Override
 	public User getByUsername(String username) {
-		final List<User> list = jdbcTemplate.query(SQL_GET_BY_USERNAME, userRowMapper, username);
-        if (list.isEmpty()) {
-                return null;
-        }
+		List<User> list = null;
+		try {
+		list = jdbcTemplate.query(SQL_GET_BY_USERNAME, userRowMapper, username);
+		} catch (Exception e ) {return null;} //SQLException or DataAccessException
         return list.get(0);
 	}
 	

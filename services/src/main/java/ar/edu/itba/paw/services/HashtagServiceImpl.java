@@ -2,26 +2,26 @@ package ar.edu.itba.paw.services;
 
 import java.util.List;
 
-import ar.edu.itba.paw.models.Tweet;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import ar.edu.itba.paw.persistence.HashtagDAO;
 
 public class HashtagServiceImpl implements HashtagService {
 
+	@Autowired
+	private HashtagDAO hashtagDAO;
+	
 	@Override
-	public void register(String msg) {
-		// TODO Auto-generated method stub
-		
+	public void register(final String hashtag, final String tweetID) {
+		hashtagDAO.create(hashtag, tweetID);
 	}
 
 	@Override
 	public List<String> getTrendingTopics() {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> ans = hashtagDAO.getTrendingTopics();
+		if (ans == null) {
+			//TODO handle null (db error)
+		}
+		return ans;
 	}
-
-	@Override
-	public List<Tweet> getTweetsByHashatag(String hashtag) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

@@ -1,18 +1,19 @@
 package ar.edu.itba.paw.persistence;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.models.Tweet;
@@ -33,20 +34,26 @@ public class TweetJDBC implements TweetDAO {
 	private static final int TIMELINE_SIZE = 10;
 	
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
-	private static final String SQL_GET_TWEETS = "select * from tweets where userID = ? LIMIT "+ TIMELINE_SIZE;
+	private static final String SQL_GET_TWEETS = "select * from " + TWEETS + " where " + USER_ID + " = ? LIMIT "+ TIMELINE_SIZE;
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
+	private final TweetRowMapper tweetRowMapper;
 
 	@Autowired
 	public TweetJDBC(final DataSource ds) {
+		tweetRowMapper = new TweetRowMapper();
 		jdbcTemplate = new JdbcTemplate(ds);
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName(TWEETS);
+		try{
 		jdbcTemplate.execute(SQL_CREATE_TABLE + TWEETS + " ("
 				+ ID +" varchar(256),"
 				+ MESSAGE +" varchar(256),"
 				+ USER_ID +" varchar(256)," 
 				+ "primary key ("+ ID +"))");
+		} catch (DataAccessException e) {
+			//TODO db error
+		}
 	}
 
 	@Override
@@ -66,8 +73,10 @@ public class TweetJDBC implements TweetDAO {
 
 	@Override
 	public List<Tweet> getTweetsByUserID(final String id) { //TODO update adding retweets
-		List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS, new TweetRowMapper(), id);
-
+		List<Tweet> ans = null;
+		try{
+			ans = jdbcTemplate.query(SQL_GET_TWEETS, tweetRowMapper , id);
+		} catch(Exception e) {} //DataAccessException or SQLException
 		return ans;
 	}
 

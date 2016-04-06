@@ -2,8 +2,8 @@ package ar.edu.itba.paw.webapp.controllers;
 
 import ar.edu.itba.paw.models.Tweet;
 import ar.edu.itba.paw.services.TweetService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,8 @@ import java.util.List;
 @Controller
 public class TimelineController {
 	
-	private static final String MAP_USER = "/user/{username}";
+	private static final String MAP_USER = "/user/";
+	private static final String MAP_USERS = "/user/{username}";
 	private final static String REDIRECT = "redirect:";
 
 	private static final String TIMELINE = "timeline";
@@ -33,7 +34,8 @@ public class TimelineController {
 	private static final String FIRSTNAME = "firstName";
 	private static final String LASTNAME = "lastName";
 	private static final String USER_ID = "userId";
-
+	private static final String DATE = "date";
+	
 	private static final String TWEET_LIST = "tweetList";
 
 	private static final String MESSAGE = "message";
@@ -44,7 +46,7 @@ public class TimelineController {
 	@Autowired
 	private TweetService tweetService;
 
-	@RequestMapping(value=MAP_USER, method= RequestMethod.GET)
+	@RequestMapping(value=MAP_USERS, method= RequestMethod.GET)
 	public ModelAndView timeline(@PathVariable(value=USERNAME) String username) {	
 		final ModelAndView mav = new ModelAndView(TIMELINE);
 		User u = userService.getUserWithUsername(username);
@@ -61,18 +63,18 @@ public class TimelineController {
 			List<Tweet> tweetList = tweetService.getTimeline(u.getId());
 
 			mav.addObject(TWEET_LIST, tweetList);
-			mav.addObject("date", new Date());
+			mav.addObject(DATE, new Date());
 
 		}
 		return mav;
 	}
 
-	@RequestMapping(value = MAP_USER + MAP_TWEET_ACTION, method = RequestMethod.POST)
+	@RequestMapping(value = MAP_USERS + MAP_TWEET_ACTION, method = RequestMethod.POST)
 	public String registerAction(@RequestParam(value=MESSAGE, required=true) String message,
 								 @PathVariable(USERNAME) String username) {
 
 		tweetService.register(message, userService.getUserWithUsername(username).getId());
 
-		return REDIRECT + "/user/" + username;
+		return REDIRECT + MAP_USER + username;
 	}
 }

@@ -65,7 +65,4 @@ public interface TweetService {
 	 */
 	public List<Tweet> getHashtag(final String hashtag);
 	
-	
-	
-	
 }
