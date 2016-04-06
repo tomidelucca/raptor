@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
 <html>
@@ -64,7 +65,7 @@
                    <h3 class="panel-title">${firstName} ${lastName} - @${username}</h3>
                </div>
              <div class="panel-body">
-               <strong style="word-wrap:break-word;">${tweet.getMsg()}</strong><br/><br/>${date}
+               <strong style="word-wrap:break-word;">${tweet.msg}</strong><br/><br/>${date}
              </div>
            </div>
         </c:forEach>
