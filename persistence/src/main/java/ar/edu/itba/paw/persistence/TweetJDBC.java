@@ -36,7 +36,8 @@ public class TweetJDBC implements TweetDAO {
 	private static final int TIMELINE_SIZE = 10;
 	
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
-	private static final String SQL_GET_TWEETS = "select * from tweets where userID = ? ORDER BY " + TIMESTAMP + " LIMIT "+ TIMELINE_SIZE;
+	private static final String SQL_GET_TWEETS = "select * from tweets where " + USER_ID + " = ? ORDER BY " + TIMESTAMP + " LIMIT "+ TIMELINE_SIZE;
+	private static final String SQL_GET_TWEETS_CONTAINING = "select * from " + TWEETS + " where " + MESSAGE + " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " LIMIT "+ TIMELINE_SIZE;
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
@@ -72,9 +73,13 @@ public class TweetJDBC implements TweetDAO {
 
 	@Override
 	public List<Tweet> getTweetsByUserID(final String id) { //TODO update adding retweets
-		List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS, new TweetRowMapper(), id);
+		try{
+			List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS, new TweetRowMapper(), id);
+			return ans;
+		}catch(Exception e){
+			return null;
+		}
 
-		return ans;
 	}
 
 	/**
@@ -104,6 +109,16 @@ public class TweetJDBC implements TweetDAO {
 			return new Tweet(rs.getString(MESSAGE),rs.getString(ID),rs.getString(USER_ID), rs.getTimestamp(TIMESTAMP));
 		}
 
+	}
+
+	@Override
+	public List<Tweet> searchTweets(String text) {
+		try{
+			final List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS_CONTAINING, new TweetRowMapper(), text);
+			return ans;
+		} catch(Exception e){
+			return null;
+		}
 	}
 
 }

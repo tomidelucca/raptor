@@ -66,7 +66,14 @@ public interface TweetService {
 	 */
 	public List<Tweet> getHashtag(final String hashtag);
 	
+	/**
+	 * Get a list of tweets containing the search.
+	 * 
+	 * @param text The text searched.
+	 * @return The recovered list.
+	 */
 	
+	public List<Tweet> searchTweets(final String text);
 	
 	
 }

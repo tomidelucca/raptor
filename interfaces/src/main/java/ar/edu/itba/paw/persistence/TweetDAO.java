@@ -3,6 +3,7 @@ package ar.edu.itba.paw.persistence;
 import java.util.List;
 
 import ar.edu.itba.paw.models.Tweet;
+import ar.edu.itba.paw.models.User;
 
 public interface TweetDAO {
 	
@@ -23,4 +24,11 @@ public interface TweetDAO {
 	 */
 	List<Tweet> getTweetsByUserID(final String id);
 
+	 /**
+     * Search for tweets
+     * 
+     * @param text the searched text.
+     * @return the list of tweets.
+     */
+    List<Tweet> searchTweets(final String text);
 }

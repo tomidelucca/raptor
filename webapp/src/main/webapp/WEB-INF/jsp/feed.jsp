@@ -16,6 +16,12 @@
         </div>
         <div class="col-md-3 col-md-offset-6">
             <a href="/signup" class="btn btn-default" style="margin-top:20px;">Sign Up!</a>
+            <form class="navbar-form navbar-left" role="search" action="/search">
+    			<div class="form-group">
+					<input type="text" name="searchText" class="form-control" id="searchText">
+    			</div>
+    			<button type="submit" class="btn btn-default">Search</button>
+			</form>
         </div>
     </div>
     <img src="${imageLink}"></img>

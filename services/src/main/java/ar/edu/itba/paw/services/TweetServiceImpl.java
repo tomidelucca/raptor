@@ -61,4 +61,12 @@ public class TweetServiceImpl implements TweetService {
 		return null;
 	}
 
+	@Override
+	public List<Tweet> searchTweets(String text) {
+		List<Tweet> ans = tweetDAO.searchTweets(text);
+		if (ans == null) {
+		}
+		return ans;
+	}
+
 }

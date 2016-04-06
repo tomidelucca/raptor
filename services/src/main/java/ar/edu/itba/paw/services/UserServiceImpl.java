@@ -1,8 +1,11 @@
 package ar.edu.itba.paw.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.edu.itba.paw.models.Tweet;
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.persistence.UserDAO;
 
@@ -28,5 +31,13 @@ public class UserServiceImpl implements UserService {
 
 	public User getUserWithUsername(String username) {
 		return userDao.getByUsername(username);
+	}
+
+	@Override
+	public List<User> searchUsers(String text) {
+		List<User> ans = userDao.searchUsers(text);
+		if (ans == null) {
+		}
+		return ans;
 	}
 }

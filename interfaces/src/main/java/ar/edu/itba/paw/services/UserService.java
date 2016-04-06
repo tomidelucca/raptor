@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.services;
 
+import java.util.List;
+
 import ar.edu.itba.paw.models.User;
 
 public interface UserService {
@@ -35,4 +37,13 @@ public interface UserService {
 	 * @return the user with the given username
 	 */
 	public User getUserWithUsername(final String username);
+	
+	/**
+	 * Get a list of users with usernames containing the search.
+	 * 
+	 * @param text The text searched.
+	 * @return The recovered list.
+	 */
+	
+	public List<User> searchUsers(final String text);
 }

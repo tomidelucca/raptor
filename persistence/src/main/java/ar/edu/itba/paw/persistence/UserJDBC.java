@@ -33,8 +33,11 @@ public class UserJDBC implements UserDAO {
 	private static final String ID = "id";
 	private static final String USERS = "users";
 	
+	private static final int USERLIST_SIZE = 10;
+	
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
 	private static final String SQL_GET_BY_USERNAME = "SELECT * FROM users WHERE username = ? LIMIT 1";
+	private static final String SQL_GET_USERS_CONTAINING = "select * from " + USERS + " where " + USERNAME + " LIKE ('%' || ? || '%') LIMIT "+ USERLIST_SIZE;
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
@@ -92,11 +95,16 @@ public class UserJDBC implements UserDAO {
 
 	//TODO SQL injection?
 	public User getByUsername(String username) {
-		final List<User> list = jdbcTemplate.query(SQL_GET_BY_USERNAME, userRowMapper, username);
-        if (list.isEmpty()) {
-                return null;
-        }
-        return list.get(0);
+		try{
+			final List<User> list = jdbcTemplate.query(SQL_GET_BY_USERNAME, userRowMapper, username);
+	        if (list.isEmpty()) {
+	                return null;
+	        }
+	        return list.get(0);
+		} catch(Exception e){
+			//TODO difference between no user found and DataAccessException pending
+			return null;
+		}
 	}
 	
 	private static class UserRowMapper implements RowMapper<User> {
@@ -109,4 +117,14 @@ public class UserJDBC implements UserDAO {
                 		rs.getString(ID));
         }
 }
+
+	@Override
+	public List<User> searchUsers(String text) {
+		try{
+			final List<User> ans = jdbcTemplate.query(SQL_GET_USERS_CONTAINING, new UserRowMapper(), text);
+			return ans;
+		} catch(Exception e){
+			return null;
+		}
+	}
 }
