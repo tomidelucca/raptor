@@ -1,5 +1,7 @@
 package ar.edu.itba.paw.persistence;
 
+import java.util.List;
+
 import ar.edu.itba.paw.models.User;
 
 public interface UserDAO {
@@ -25,4 +27,12 @@ public interface UserDAO {
      * @return the user
      */
     User getByUsername(final String username);
+    
+    /**
+     * Search for users
+     * 
+     * @param text the searched text.
+     * @return the list of users.
+     */
+    List<User> searchUsers(final String text);
 }

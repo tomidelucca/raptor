@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.services.UserService;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -34,7 +33,6 @@ public class TimelineController {
 	private static final String FIRSTNAME = "firstName";
 	private static final String LASTNAME = "lastName";
 	private static final String USER_ID = "userId";
-	private static final String DATE = "date";
 	
 	private static final String TWEET_LIST = "tweetList";
 
@@ -63,7 +61,6 @@ public class TimelineController {
 			List<Tweet> tweetList = tweetService.getTimeline(u.getId());
 
 			mav.addObject(TWEET_LIST, tweetList);
-			mav.addObject(DATE, new Date());
 
 		}
 		return mav;

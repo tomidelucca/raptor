@@ -23,4 +23,11 @@ public interface TweetDAO {
 	 */
 	List<Tweet> getTweetsByUserID(final String id);
 
+	 /**
+     * Search for tweets
+     * 
+     * @param text the searched text.
+     * @return the list of tweets.
+     */
+    List<Tweet> searchTweets(final String text);
 }

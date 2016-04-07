@@ -1,0 +1,63 @@
+package ar.edu.itba.paw.webapp.controllers;
+
+import ar.edu.itba.paw.models.Tweet;
+import ar.edu.itba.paw.models.User;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import ar.edu.itba.paw.services.TweetService;
+import ar.edu.itba.paw.services.UserService;
+
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class SearchController {
+	
+	private final static String SEARCH = "searchResults";
+	private final static String MAP_SEARCH = "/search";
+	private final static String SEARCH_TYPE = "searchType";
+	private final static String USER_SEARCH = "userSearch";
+	private final static String HASHTAG_SEARCH = "hashtagSearch";
+	private final static String TWEET_SEARCH = "tweetSearch";	
+	private final static String RESULT = "resultList";
+	private final static String NUMBER_OF_RESULTS = "number";
+	
+	private final static String SEARCH_TEXT = "searchText";
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private TweetService tweetService;
+	
+	@RequestMapping(MAP_SEARCH)
+    public ModelAndView search(@RequestParam(value=SEARCH_TEXT, required=true) String text) {
+		
+        final ModelAndView mav = new ModelAndView(SEARCH);
+        
+        mav.addObject(SEARCH_TEXT, text);
+        //TODO ver que hacer cuando se manda enter sin input
+        switch(text.charAt(0)){
+        	case '#':   mav.addObject(SEARCH_TYPE, HASHTAG_SEARCH);
+						//TODO implementar hashtagSearch
+						break;
+        	case '@':   mav.addObject(SEARCH_TYPE, USER_SEARCH);
+        				List<User> users = userService.searchUsers(text.substring(1));
+        				mav.addObject(NUMBER_OF_RESULTS, users.size());
+        				mav.addObject(RESULT, users);
+        				break;
+        	default:	mav.addObject(SEARCH_TYPE, TWEET_SEARCH);
+						List<Tweet> tweets = tweetService.searchTweets(text);
+						mav.addObject(NUMBER_OF_RESULTS, tweets.size());
+						mav.addObject(RESULT, tweets);
+						break;
+        }
+        
+        return mav;
+    }
+}
