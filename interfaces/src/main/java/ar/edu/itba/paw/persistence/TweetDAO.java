@@ -23,9 +23,17 @@ public interface TweetDAO {
 	 * @return The user's list of tweets.
 	 */
 	List<Tweet> getTweetsByUserID(final String id);
+	
+	/**
+	 * Get a list of Tweets with a hashtag.
+	 * 
+	 * @param hashtag
+	 * @return the list
+	 */
+	List<Tweet> getTweetsByHashtag(final String hashtag);
 
 	 /**
-     * Search for tweets
+     * Search for tweets.
      * 
      * @param text the searched text.
      * @return the list of tweets.

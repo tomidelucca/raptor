@@ -72,6 +72,5 @@ public interface TweetService {
 	 * @param text The text searched.
 	 * @return The recovered list.
 	 */
-	
 	public List<Tweet> searchTweets(final String text);
 }

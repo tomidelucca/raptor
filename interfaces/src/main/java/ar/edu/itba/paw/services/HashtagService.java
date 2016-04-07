@@ -2,15 +2,16 @@ package ar.edu.itba.paw.services;
 
 import java.util.List;
 
+import ar.edu.itba.paw.models.Tweet;
+
 public interface HashtagService {
 	
 	/**
-	 * Store a hashtag.
+	 * Store all hashtag from a tweet.
 	 * 
-	 * @param hashtag The hashtag name.
-	 * @param tweetID The tweet.
+	 * @param tweet the hashtag's container.
 	 */
-	public void register(final String hashtag, final String tweetID);
+	public void register(final Tweet tweet);
 	
 	/**
 	 * Get a user's list of hashtags.

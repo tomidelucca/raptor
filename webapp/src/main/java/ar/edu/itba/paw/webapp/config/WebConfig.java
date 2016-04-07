@@ -20,12 +20,14 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 public class WebConfig  extends WebMvcConfigurerAdapter {
 	
+	private static final String RESOURCES = "/resources/";
+	private static final String RESOURCES_PATH = "/resources/**";
 	private final static String PREFIX_WEB_INF = "/WEB-INF/jsp/";
 	private final static String SUFFIX_JSP = ".jsp";
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+		registry.addResourceHandler(RESOURCES_PATH).addResourceLocations(RESOURCES);
 	}
 
 	@Bean

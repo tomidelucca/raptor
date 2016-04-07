@@ -15,6 +15,7 @@ public class TweetServiceImpl implements TweetService {
 	@Autowired
 	private TweetDAO tweetDAO;
 	
+	//test
 	void setTweetDAO(TweetDAO tweetDAO) {
 		this.tweetDAO = tweetDAO;
 	}
@@ -25,7 +26,9 @@ public class TweetServiceImpl implements TweetService {
 		if(t == null) {
 			//TODO handle null (invalid message)
 		} else {
-			//TODO hashtag and mentions handler
+			//TODO mentions handler
+			HashtagServiceImpl asd = new HashtagServiceImpl();
+			asd.register(t);
 		}
 		return t;
 	}
@@ -65,16 +68,19 @@ public class TweetServiceImpl implements TweetService {
 
 	@Override
 	public List<Tweet> getHashtag(final String hashtag) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Tweet> ans = tweetDAO.getTweetsByHashtag(hashtag);
+		if (ans == null) {
+			//TODO handle null (db error)
+		}
+		return ans;
 	}
-
+	
 	@Override
 	public List<Tweet> searchTweets(String text) {
 		List<Tweet> ans = tweetDAO.searchTweets(text);
 		if (ans == null) {
+			//TODO handle null
 		}
 		return ans;
 	}
-
 }

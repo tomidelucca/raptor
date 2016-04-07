@@ -2,8 +2,8 @@ package ar.edu.itba.paw.models;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,9 +14,11 @@ public class Tweet {
 	
 	private final static int MAX_LENGTH=256;
 	
-	private final static String ERROR_LENGTH = "A tweet can not have more than "+ MAX_LENGTH +" characters.";
+	private final static String DATE_FORMAT = "h:mm a - d MMMM yyyy";
 	
-	private final static SimpleDateFormat sdf = new SimpleDateFormat("h:mm a - d MMMM yyyy");
+	private final static String ERROR_LENGTH = "A tweet can not have more than "+ MAX_LENGTH +" or 0 characters.";
+	
+	private final static SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 	
 	private final String msg;
 	private final String id;
@@ -32,7 +34,8 @@ public class Tweet {
 	 * @throws IllegalArgumentException
 	 */
 	public Tweet(final String msg, final String id, final User owner, final Timestamp timestamp) throws IllegalArgumentException {
-		if (msg.length()>MAX_LENGTH) {
+		int length = msg.length();
+		if (length > MAX_LENGTH || length <= 0 ) {
 			throw new IllegalArgumentException(ERROR_LENGTH);
 		}
 		this.msg = msg;
@@ -47,7 +50,7 @@ public class Tweet {
 	 * @param msg The tweet's message.
 	 * @return List of hashtags.
 	 */
-	public static List<String> getHashtag(String msg){
+	public static Set<String> getHashtag(String msg){
 		return patternFilter(msg, HASHTAG_PATTERN, "#");
 	}
 	
@@ -57,7 +60,7 @@ public class Tweet {
 	 * @param msg The tweet's message.
 	 * @return List of mentinos.
 	 */
-	public static List<String> getMentions(String msg){
+	public static Set<String> getMentions(String msg){
 		return patternFilter(msg, MENTION_PATTERN, "@");
 	}
 	
@@ -69,8 +72,8 @@ public class Tweet {
 	 * @param c A Special character.
 	 * @return
 	 */
-	private static List<String> patternFilter(String msg, String pattern, String c) { //TODO SET - NO REPET!
-		List<String> ans = new LinkedList<String>();
+	private static Set<String> patternFilter(String msg, String pattern, String c) { 
+		 Set<String> ans = new HashSet<String>();
 	     Pattern pt = Pattern.compile(pattern);
 	     Matcher matcher = pt.matcher(msg);
 	     String result = "";

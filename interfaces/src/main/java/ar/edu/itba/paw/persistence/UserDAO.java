@@ -17,11 +17,10 @@ public interface UserDAO {
      * @param id The user's id.
      * @return The created user.
      */
-
     User create(final String username, final String password, final String email, final String firstName, final String lastName);
     
     /**
-     * 
+     * Get a user with a given username.
      * 
      * @param username the searched username
      * @return the user
@@ -29,7 +28,7 @@ public interface UserDAO {
     User getByUsername(final String username);
     
     /**
-     * Search for users
+     * Search for users.
      * 
      * @param text the searched text.
      * @return the list of users.

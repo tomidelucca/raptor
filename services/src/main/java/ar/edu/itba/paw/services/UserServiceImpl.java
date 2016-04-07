@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO userDao;
 
+	//test
 	void setUserDao(UserDAO userDao) {
 		this.userDao = userDao;
 	}
@@ -25,6 +26,15 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	@Override
+	public List<User> searchUsers(String text) {
+		List<User> ans = userDao.searchUsers(text);
+		if (ans == null) {
+			//TODO handle null
+		}
+		return ans;
+	}
+	
 	@Override
 	public User login(String username, String password) {
 		return null;
@@ -38,13 +48,5 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserWithUsername(String username) {
 		return userDao.getByUsername(username);
-	}
-
-	@Override
-	public List<User> searchUsers(String text) {
-		List<User> ans = userDao.searchUsers(text);
-		if (ans == null) {
-		}
-		return ans;
 	}
 }

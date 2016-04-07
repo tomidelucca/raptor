@@ -51,13 +51,13 @@ public class UserJDBC implements UserDAO {
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName(USERS);
 		try {
 		jdbcTemplate.execute(SQL_CREATE_TABLE + USERS +" ("
-				+ USERNAME + " varchar(100)," 
-				+ PASSWORD + " varchar(100),"
+				+ USERNAME + " varchar(100) NOT NULL," 
+				+ PASSWORD + " varchar(100) NOT NULL,"
 				+ EMAIL + " varchar(100),"
-				+ FIRSTNAME + " varchar(100),"
-				+ LASTNAME + " varchar(100),"
-				+ ID + " varchar(100),"
-				+ "primary key ("+ ID +"))");
+				+ FIRSTNAME + " varchar(100) NOT NULL,"
+				+ LASTNAME + " varchar(100) NOT NULL,"
+				+ ID + " varchar(100) NOT NULL,"
+				+ "PRIMARY KEY ("+ ID +"));");
 		} catch (DataAccessException e) {
 			//TODO db error
 		}
@@ -86,6 +86,8 @@ public class UserJDBC implements UserDAO {
 
 	@Override
 	public User create(final String username, final String password, final String email, final String firstName, final String lastName) {
+		if(username.length() >= 256 || password.length() >= 256 || email.length() >= 256 || firstName.length() >= 256 || lastName.length() >= 256 )
+			return null;
 		final Map<String, Object> args = new HashMap<String, Object>();
 		args.put(USERNAME, username);
 		args.put(PASSWORD, password);
@@ -106,17 +108,22 @@ public class UserJDBC implements UserDAO {
 		try{
 			final List<User> list = jdbcTemplate.query(SQL_GET_BY_USERNAME, userRowMapper, username);
 	        if (list.isEmpty()) {
-	                return null;
+	                return null; //TODO difference between no user found and DataAccessException pending
 	        }
 	        return list.get(0);
-		} catch(Exception e){ //SQLException or DataAccessException
-			//TODO difference between no user found and DataAccessException pending
-			return null;
-		}
+		} catch(Exception e) { return null; } //SQLException or DataAccessException
+	}
+	
+	@Override
+	public List<User> searchUsers(String text) {
+		try{
+			return jdbcTemplate.query(SQL_GET_USERS_CONTAINING, userRowMapper, text);
+		} catch(Exception e) { return null; } //SQLException or DataAccessException
 	}
 	
 	private static class UserRowMapper implements RowMapper<User> {
 
+		@Override
         public User mapRow(final ResultSet rs, final int rowNum) throws SQLException {
                 return new User(rs.getString(USERNAME),
                 		rs.getString(EMAIL),
@@ -124,15 +131,5 @@ public class UserJDBC implements UserDAO {
                 		rs.getString(LASTNAME),
                 		rs.getString(ID));
         }
-}
-
-	@Override
-	public List<User> searchUsers(String text) {
-		try{
-			final List<User> ans = jdbcTemplate.query(SQL_GET_USERS_CONTAINING, new UserRowMapper(), text);
-			return ans;
-		} catch(Exception e){
-			return null;
-		}
 	}
 }

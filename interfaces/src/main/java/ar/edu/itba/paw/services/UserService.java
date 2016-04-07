@@ -7,7 +7,8 @@ import ar.edu.itba.paw.models.User;
 public interface UserService {
 
 	/**
-	 * Registers a new user if it doesn't exist
+	 * Registers a new user.
+	 * 
 	 * @param username the new user's username
 	 * @param password the new user's password
 	 * @param email the new user's email
@@ -18,21 +19,25 @@ public interface UserService {
 	public User register(final String username, final String password, final String email, final String firstName, final String lastName);
 
 	/**
-	 * Logs the user
+	 * Logs the user.
 	 *
-	 * @param username
+	 * @param username 
 	 * @param password
 	 * @return the newly logged user
 	 */
 	public User login(final String username, final String password);
 
 	/**
+	 * Get a user with a given ID.
+	 * 
 	 * @param userId
 	 * @return the user with the given identifier
 	 */
 	public User getUserWithId(final String userId);
 
 	/**
+	 * Get a user with a given username.
+	 * 
 	 * @param username
 	 * @return the user with the given username
 	 */
@@ -44,6 +49,5 @@ public interface UserService {
 	 * @param text The text searched.
 	 * @return The recovered list.
 	 */
-	
 	public List<User> searchUsers(final String text);
 }
