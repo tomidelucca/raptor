@@ -45,7 +45,7 @@ public class TimelineController {
 	private TweetService tweetService;
 
 	@RequestMapping(value=MAP_USERS, method= RequestMethod.GET)
-	public ModelAndView timeline(@PathVariable(value=USERNAME) String username) {	
+	public ModelAndView timeline(@PathVariable(value=USERNAME) String username) {
 		final ModelAndView mav = new ModelAndView(TIMELINE);
 		User u = userService.getUserWithUsername(username);
 

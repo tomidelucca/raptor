@@ -4,6 +4,11 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+.col-centered{
+  float: none;
+  margin: 0 auto;
+}
+
 .logo {
   background-image: url(../img/logo.png);
   background-repeat: no-repeat;
@@ -16,6 +21,11 @@ body {
 
 .section-navbar p, a{
   color: #3C8BED;
+}
+
+input[type="text"], input[type="password"] {
+  border-radius: 20px;
+  height: 40px;
 }
 
 .btn-raptor {
@@ -59,6 +69,7 @@ body {
 .section-navbar .search-input {
   max-width: 200px;
   float: left;
+  height: 35px;
   margin-right: 5px;
   border-radius: 20px;
   font-weight: normal;
@@ -67,8 +78,8 @@ body {
 }
 
 .section-navbar .navbar-raptor {
-    background-color: white;
-    border-color: #D6D6D6;
+  background-color: white;
+  border-color: #D6D6D6;
 }
 
 /* PROFILE */
@@ -113,14 +124,14 @@ body {
   padding: 10px;
 }
 
-.section-timeline .timeline-heading {
+.timeline-heading {
   height: 50px;
   line-height: 48px;
   font-weight: 500;
   padding: 0;
 }
 
-.section-timeline .timeline-heading a {
+.timeline-heading a {
   display: inline-block;
   text-transform: uppercase;
   text-decoration: none;
@@ -129,14 +140,14 @@ body {
   text-align: center;
 }
 
-.section-timeline .timeline-heading .active{
+.timeline-heading .active{
   color: #3C8BED;
   border-color: #3C8BED;
   border: solid 0px;
   border-bottom-width: 2px;
 }
 
-.section-timeline .panel-rawr {
+.panel-rawr {
   border-radius: 0px;
   box-shadow: none;
   -webkit-box-shadow: none;
@@ -146,13 +157,20 @@ body {
   margin: 0;
   padding: 10px;
   padding-bottom: 20px;
+  word-wrap:break-word;
 }
 
-.section-timeline .profile-picture {
+.panel-rawr .profile-picture {
   height: 60px;
   width: 60px;
   border-radius: 50%;
   border: solid 2px;
   border-color: #dadada;
   text-align: center;
+}
+
+.section-not-found .raptor-logo {
+  height:200px;
+  border-radius: 50%;
+  border: solid 5px;
 }

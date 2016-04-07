@@ -60,9 +60,15 @@
             </div>
         </c:when>
             <c:otherwise>
-                <h2>Ups! The requested user doesn't exist!</h2>
-                <div class="col-md-4 col-md-offset-3">
-                    <img src="http://i.imgur.com/icWJ1Qx.png" style="height:200px;"/>
+                <div class="section-not-found">
+                    <div class="container">
+                        <div class="col-centered col-md-8" style="text-align:center;">
+                            <div class="row">
+                                <h2 style="margin-bottom: 50px;">Ups! The requested user doesn't exist!</h2>
+                                <img class="raptor-logo" src="/resources/img/raptor-angry.png"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </c:otherwise>
         </c:choose>
