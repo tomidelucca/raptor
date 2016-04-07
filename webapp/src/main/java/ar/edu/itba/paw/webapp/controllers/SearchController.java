@@ -41,7 +41,7 @@ public class SearchController {
         final ModelAndView mav = new ModelAndView(SEARCH);
         
         mav.addObject(SEARCH_TEXT, text);
-        
+        //TODO ver que hacer cuando se manda enter sin input
         switch(text.charAt(0)){
         	case '#':   mav.addObject(SEARCH_TYPE, HASHTAG_SEARCH);
 						//TODO implementar hashtagSearch

@@ -3,7 +3,6 @@ package ar.edu.itba.paw.persistence;
 import java.util.List;
 
 import ar.edu.itba.paw.models.Tweet;
-import ar.edu.itba.paw.models.User;
 
 public interface TweetDAO {
 	

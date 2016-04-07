@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ar.edu.itba.paw.models.Tweet;
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.persistence.UserDAO;
 
