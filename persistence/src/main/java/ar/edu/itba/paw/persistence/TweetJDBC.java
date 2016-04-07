@@ -36,8 +36,8 @@ public class TweetJDBC implements TweetDAO {
 	private static final int TIMELINE_SIZE = 10;
 	
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
-	private static final String SQL_GET_TWEETS = "select * from tweets where " + USER_ID + " = ? ORDER BY " + TIMESTAMP + " LIMIT "+ TIMELINE_SIZE;
-	private static final String SQL_GET_TWEETS_CONTAINING = "select * from " + TWEETS + " where " + MESSAGE + " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " LIMIT "+ TIMELINE_SIZE;
+	private static final String SQL_GET_TWEETS = "select * from tweets where " + USER_ID + " = ? ORDER BY " + TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
+	private static final String SQL_GET_TWEETS_CONTAINING = "select * from " + TWEETS + " where " + MESSAGE + " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
