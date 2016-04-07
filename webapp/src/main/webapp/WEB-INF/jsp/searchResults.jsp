@@ -15,14 +15,14 @@
         	<c:choose>
 	        	<c:when test="${searchType=='tweetSearch'}">
 	        		<h2><a href="/">RAPTOR</a></h2>
-        			<h2>${number} results found for "${searchText}"</h2>
+        			<h2>${number} result(s) found for "${searchText}"</h2>
 	            	<div class="panel panel-default">
 	                    <div class="row">
 	                        <div class="col-md-7 col-md-offset-3" style="margin-top:20px;">
 				            	<c:forEach items="${resultList}" var="tweet">
 				           			<div class="panel panel-info">
 					               		<div class="panel-heading">
-					                   		<h3 class="panel-title">NOMBRE APELLIDO - @username</h3>
+					                   		<h3 class="panel-title">${tweet.owner.firstName} ${tweet.owner.lastName} - @${tweet.owner.username}</h3>
 					               		</div>
 					             		<div class="panel-body">
 					               			<strong style="word-wrap:break-word;">${tweet.msg}</strong><br/><br/>${tweet.timestamp}
@@ -35,7 +35,7 @@
                 </c:when>
 	        	<c:when test="${searchType=='userSearch'}">
 	        		<h2><a href="/">RAPTOR</a></h2>
-        			<h2>${number} results found for "${searchText}"</h2>
+        			<h2>${number} result(s) found for "${searchText}"</h2>
 	            	<div class="panel panel-default">
 	                    <div class="row">
 	                        <div class="col-md-7 col-md-offset-3" style="margin-top:20px;">

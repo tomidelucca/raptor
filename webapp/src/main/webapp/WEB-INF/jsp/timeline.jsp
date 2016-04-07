@@ -62,14 +62,10 @@
         <c:forEach items="${tweetList}" var="tweet">
            <div class="panel panel-info">
                <div class="panel-heading">
-                   <h3 class="panel-title">${firstName} ${lastName} - @${username}</h3>
+                   <h3 class="panel-title">${tweet.owner.firstName} ${tweet.owner.lastName} - @${tweet.owner.username}</h3>
                </div>
              <div class="panel-body">
-<<<<<<< HEAD
-               <strong style="word-wrap:break-word;">${tweet.msg}</strong><br/><br/>${date}
-=======
                <strong style="word-wrap:break-word;">${tweet.msg}</strong><br/><br/>${tweet.timestamp}
->>>>>>> tweeting
              </div>
            </div>
         </c:forEach>

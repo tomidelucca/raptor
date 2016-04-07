@@ -20,7 +20,7 @@ public class Tweet {
 	
 	private final String msg;
 	private final String id;
-	private final String userID;
+	private final User owner;
 	private final Timestamp timestamp;
 	
 	/**
@@ -31,13 +31,13 @@ public class Tweet {
 	 * @param userID The user's ID.
 	 * @throws IllegalArgumentException
 	 */
-	public Tweet(final String msg, final String id, final String userID, final Timestamp timestamp) throws IllegalArgumentException {
+	public Tweet(final String msg, final String id, final User owner, final Timestamp timestamp) throws IllegalArgumentException {
 		if (msg.length()>MAX_LENGTH) {
 			throw new IllegalArgumentException(ERROR_LENGTH);
 		}
 		this.msg = msg;
 		this.id = id;
-		this.userID = userID;
+		this.owner = owner;
 		this.timestamp = timestamp;
 	}
 	
@@ -130,8 +130,8 @@ public class Tweet {
 		return id;
 	}
 
-	public String getUserID() {
-		return userID;
+	public User getOwner() {
+		return owner;
 	}
 	
 	public String getTimestamp(){

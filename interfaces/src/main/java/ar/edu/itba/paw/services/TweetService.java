@@ -3,6 +3,7 @@ package ar.edu.itba.paw.services;
 import java.util.List;
 
 import ar.edu.itba.paw.models.Tweet;
+import ar.edu.itba.paw.models.User;
 
 public interface TweetService {
 
@@ -10,19 +11,19 @@ public interface TweetService {
 	 * Store a new Tweet.
 	 * 
 	 * @param msg The tweet's message. 
-	 * @param userID The user's ID.
+	 * @param owner The user wrote this tweet.
 	 * @return The registered tweet.
 	 */
-	public Tweet register(final String msg, final String userID);
+	public Tweet register(final String msg, final User owner);
 	
 	/**
 	 * Reweets a previous tweet.
 	 * 
 	 * @param tweetID The old tweet's id.
-	 * @param userID The new tweet user's id.
+	 * @param owner The user wrote this tweet.
 	 * @return The new tweet.
 	 */
-	public Tweet retweet(final String tweetID, final String userID);
+	public Tweet retweet(final String tweetID, final User owner);
 	
 	
 	/**

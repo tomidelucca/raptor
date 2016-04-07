@@ -70,7 +70,7 @@ public class TimelineController {
 	public String registerAction(@RequestParam(value=MESSAGE, required=true) String message,
 								 @PathVariable(USERNAME) String username) {
 
-		tweetService.register(message, userService.getUserWithUsername(username).getId());
+		tweetService.register(message, userService.getUserWithUsername(username));
 
 		return REDIRECT + MAP_USER + username;
 	}
