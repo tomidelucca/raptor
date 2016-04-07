@@ -3,6 +3,7 @@ package ar.edu.itba.paw.persistence;
 import java.util.List;
 
 import ar.edu.itba.paw.models.Tweet;
+import ar.edu.itba.paw.models.User;
 
 public interface TweetDAO {
 	
@@ -10,10 +11,10 @@ public interface TweetDAO {
 	 * Create a new tweet.
 	 * 
 	 * @param msg The tweet's message. 
-	 * @param userID The user's ID.
+	 * @param owner The user who wrote this tweet.
 	 * @return The registered tweet.
 	 */
-	Tweet create(final String msg, final String userID);
+	Tweet create(final String msg, final User owner);
 	
 	/**
 	 * Get a list of user's tweets.

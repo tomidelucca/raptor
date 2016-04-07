@@ -20,6 +20,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import ar.edu.itba.paw.models.Tweet;
+import ar.edu.itba.paw.models.User;
 
 /**
  * 
@@ -29,21 +30,30 @@ import ar.edu.itba.paw.models.Tweet;
 @Repository
 public class TweetJDBC implements TweetDAO {
 	
-	private static final String ID = "ID";
+	private static final String ID = "tweetID";
 	private static final String MESSAGE = "message";
 	private static final String USER_ID = "userID";
 	private static final String TIMESTAMP = "timestamp";
 	private static final String TWEETS = "tweets";
 	
+	private static final String USERS = "users";
+	private static final String USERNAME = "username";
+	private static final String FIRST_NAME = "firstName";
+	private static final String LAST_NAME = "lastName";
+	private static final String EMAIL = "email";
+	
 	private static final int TIMELINE_SIZE = 10;
 	
+	private static final String TWEET_SELECT = ID + ", " + MESSAGE + ", " + TWEETS + "." + USER_ID + " AS " + USER_ID + ", " + TIMESTAMP + ", " + USERNAME + ", " + FIRST_NAME + ", " + LAST_NAME + ", " + EMAIL;
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
-	private static final String SQL_GET_TWEETS = "select * from tweets where " + USER_ID + " = ? ORDER BY " + TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
-	private static final String SQL_GET_TWEETS_CONTAINING = "select * from " + TWEETS + " where " + MESSAGE + " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
+	private static final String SQL_GET_TWEETS = "select " + TWEET_SELECT + " from " + TWEETS + ", " + USERS + " where users.userID = tweets.userID AND users.userID = ? ORDER BY " + TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
+	private static final String SQL_GET_TWEETS_CONTAINING = "select " + TWEET_SELECT + " from " + TWEETS + ", " + USERS + " where users.userID = tweets.userID AND " + MESSAGE + " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
 	private final TweetRowMapper tweetRowMapper;
+	
+	
 
 	@Autowired
 	public TweetJDBC(final DataSource ds) {
@@ -63,17 +73,17 @@ public class TweetJDBC implements TweetDAO {
 	}
 
 	@Override
-	public Tweet create(final String msg, final String userID) {
+	public Tweet create(final String msg, final User owner) {
 		final Map<String, Object> args = new HashMap<String, Object>();
 		String id = randomTweetId();
 		Timestamp thisMoment = new Timestamp(new Date().getTime());
 		args.put(ID, id);
 		args.put(MESSAGE, msg);
-		args.put(USER_ID, userID);
+		args.put(USER_ID, owner.getId());
 		args.put(TIMESTAMP, thisMoment);
 		jdbcInsert.execute(args);
 		try {
-			return new Tweet(msg, id, userID, thisMoment);
+			return new Tweet(msg, id, owner, thisMoment);
 		} catch (IllegalArgumentException e) {
 			return null;
 		}
@@ -112,7 +122,7 @@ public class TweetJDBC implements TweetDAO {
 	private static class TweetRowMapper implements RowMapper<Tweet>{
 
 		public Tweet mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return new Tweet(rs.getString(MESSAGE),rs.getString(ID),rs.getString(USER_ID), rs.getTimestamp(TIMESTAMP));
+			return new Tweet(rs.getString(MESSAGE),rs.getString(ID),new User(rs.getString(USERNAME), rs.getString(EMAIL), rs.getString(FIRST_NAME), rs.getString(LAST_NAME), rs.getString(USER_ID)), rs.getTimestamp(TIMESTAMP));
 		}
 
 	}

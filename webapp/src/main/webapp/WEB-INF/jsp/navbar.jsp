@@ -23,9 +23,9 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <form class="navbar-form navbar-left" role="search">
+                        <form class="navbar-form navbar-left" role="search" action="/search">
                             <div class="form-group">
-                                <input type="text" class="form-control search-input" placeholder="Search Raptor...">
+                                <input type="text" class="form-control search-input" name="searchText" placeholder="Search Raptor...">
                             </div>
                             <button type="submit" class="btn btn-default btn-raptor" style="height: 34px; width: 34px;">
                                 <img src="/resources/img/icn-search.png" style="height: 18px; margin-left:-4px;"/>

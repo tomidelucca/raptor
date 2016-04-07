@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.edu.itba.paw.models.Tweet;
+import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.persistence.TweetDAO;
 
 @Service
@@ -19,8 +20,8 @@ public class TweetServiceImpl implements TweetService {
 	}
 
 	@Override
-	public Tweet register(final String msg, final String userID) {
-		Tweet t = tweetDAO.create(msg, userID);
+	public Tweet register(final String msg, final User owner) {
+		Tweet t = tweetDAO.create(msg, owner);
 		if(t == null) {
 			//TODO handle null (invalid message)
 		} else {
@@ -39,7 +40,7 @@ public class TweetServiceImpl implements TweetService {
 	}
 
 	@Override
-	public Tweet retweet(final String tweetID, final String userID) {
+	public Tweet retweet(final String tweetID, final User owner) {
 		// TODO Auto-generated method stub
 		return null;
 	}

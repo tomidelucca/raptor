@@ -31,13 +31,13 @@ public class UserJDBC implements UserDAO {
 	private static final String EMAIL = "email";
 	private static final String FIRSTNAME = "firstName";
 	private static final String LASTNAME = "lastName";
-	private static final String ID = "id";
+	private static final String ID = "userID";
 	private static final String USERS = "users";
 	
 	private static final int USERLIST_SIZE = 10;
 	
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
-	private static final String SQL_GET_BY_USERNAME = "SELECT * FROM users WHERE username = ? LIMIT 1";
+	private static final String SQL_GET_BY_USERNAME = "SELECT * FROM " + USERS + " WHERE " + USERNAME + " = ? LIMIT 1";
 	private static final String SQL_GET_USERS_CONTAINING = "select * from " + USERS + " where " + USERNAME + " LIKE ('%' || ? || '%') LIMIT "+ USERLIST_SIZE;
 	
 	private final JdbcTemplate jdbcTemplate;
@@ -56,7 +56,8 @@ public class UserJDBC implements UserDAO {
 				+ EMAIL + " varchar(100),"
 				+ FIRSTNAME + " varchar(100),"
 				+ LASTNAME + " varchar(100),"
-				+ ID + " varchar(100)"+ ")");
+				+ ID + " varchar(100),"
+				+ "primary key ("+ ID +"))");
 		} catch (DataAccessException e) {
 			//TODO db error
 		}
