@@ -13,15 +13,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.services.UserService;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class TimelineController {
 	
+	private static final String USERNAME = "username";
+	private static final String PAGE = "page";
 	private static final String MAP_USER = "/user/";
-	private static final String MAP_USERS = "/user/{username}";
+	private static final String MAP_USERS = "/user/{" + USERNAME + "}";
+	private static final String MAP_USERS_WITH_PAGING = MAP_USERS +"/{" + PAGE + "}";
 	private final static String REDIRECT = "redirect:";
 	private final static int TIMELINE_SIZE = 10;
 
@@ -29,8 +32,6 @@ public class TimelineController {
 
 	private final static String MAP_TWEET_ACTION = "/tweetAction";
 	
-	private static final String USERNAME = "username";
-
 	private static final String USER = "user";
 	
 	private static final String TWEET_LIST = "tweetList";
@@ -43,8 +44,11 @@ public class TimelineController {
 	@Autowired
 	private TweetService tweetService;
 
-	@RequestMapping(value=MAP_USERS, method= RequestMethod.GET)
-	public ModelAndView timeline(@PathVariable(value=USERNAME) String username) {
+	@RequestMapping(value={MAP_USERS, MAP_USERS_WITH_PAGING}, method= RequestMethod.GET)
+	public ModelAndView timeline(@PathVariable Map<String, String> pathVariables){
+	//(value=USERNAME) String username) {
+		String username = pathVariables.get(USERNAME);
+		int page = Integer.valueOf(pathVariables.getOrDefault(PAGE, "1"));
 		final ModelAndView mav = new ModelAndView(TIMELINE);
 		User u = userService.getUserWithUsername(username);
 
@@ -52,7 +56,7 @@ public class TimelineController {
 
 			mav.addObject(USER, u);
 
-			List<Tweet> tweetList = tweetService.getTimeline(u.getId(), TIMELINE_SIZE, 1);
+			List<Tweet> tweetList = tweetService.getTimeline(u.getId(), TIMELINE_SIZE, page);
 
 			mav.addObject(TWEET_LIST, tweetList);
 

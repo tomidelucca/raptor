@@ -64,7 +64,6 @@ public class HashtagJDBC implements HashtagDAO {
 
 	@Override
 	public void create(final String hashtag, final String tweetID) {
-		System.out.println(hashtag);
 		if(hashtag.length() >= 256){
 			return;
 		}
