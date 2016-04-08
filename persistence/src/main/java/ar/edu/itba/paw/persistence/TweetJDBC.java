@@ -43,8 +43,6 @@ public class TweetJDBC implements TweetDAO {
 	private static final String LAST_NAME = "lastName";
 	private static final String EMAIL = "email";
 	
-	private static final int TIMELINE_SIZE = 10;
-	
 	private static final String TWEET_SELECT = ID + ", " + MESSAGE + ", " + TWEETS + "." + USER_ID 
 						+ " AS " + USER_ID + ", " + TIMESTAMP + ", " + USERNAME + ", " + FIRST_NAME 
 						+ ", " + LAST_NAME + ", " + EMAIL;
@@ -53,15 +51,15 @@ public class TweetJDBC implements TweetDAO {
 	
 	private static final String SQL_GET_TWEETS = "select " + TWEET_SELECT + " from " + TWEETS + ", " 
 						+ USERS + " where users.userID = tweets.userID AND users.userID = ? ORDER BY " 
-						+ TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
+						+ TIMESTAMP + " DESC";
 
 	private static final String SQL_GET_TWEETS_WITH_HASHTAG = "select " + TWEET_SELECT + " from " + TWEETS + ", " 
 			+ HASHTAGS + ", " + USERS + " where hashtags.tweetID = tweets.tweetID AND tweets.userID = users.userID AND hashtag = ? ORDER BY " 
-			+ TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
+			+ TIMESTAMP + " DESC";
 	
 	private static final String SQL_GET_TWEETS_CONTAINING = "select " + TWEET_SELECT + " from " + TWEETS 
 						+ ", " + USERS + " where users.userID = tweets.userID AND " + MESSAGE 
-						+ " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
+						+ " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " DESC";
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
@@ -103,9 +101,9 @@ public class TweetJDBC implements TweetDAO {
 	}
 
 	@Override
-	public List<Tweet> getTweetsByUserID(final String id) { //TODO update adding retweets
+	public List<Tweet> getTweetsByUserID(final String id, int resultsPerPage, int page) { //TODO update adding retweets
 		try{
-			return jdbcTemplate.query(SQL_GET_TWEETS, tweetRowMapper, id);
+			return jdbcTemplate.query(SQL_GET_TWEETS + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, id);
 		}catch(Exception e) { return null; } //DataAccessException or SQLException
 	}
 
@@ -130,16 +128,16 @@ public class TweetJDBC implements TweetDAO {
 	}
 	
 	@Override
-	public List<Tweet> getTweetsByHashtag(final String hashtag) {
+	public List<Tweet> getTweetsByHashtag(final String hashtag, int resultsPerPage, int page) {
 		try{
-			return jdbcTemplate.query(SQL_GET_TWEETS_WITH_HASHTAG, tweetRowMapper, hashtag);
+			return jdbcTemplate.query(SQL_GET_TWEETS_WITH_HASHTAG + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, hashtag);
 		}catch(Exception e) { return null; } //DataAccessException or SQLException
 	}
 	
 	@Override
-	public List<Tweet> searchTweets(String text) {
+	public List<Tweet> searchTweets(String text, int resultsPerPage, int page) {
 		try{
-			final List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS_CONTAINING, tweetRowMapper, text);
+			final List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS_CONTAINING + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, text);
 			return ans;
 		} catch(Exception e){
 			return null;

@@ -47,7 +47,9 @@ public interface UserService {
 	 * Get a list of users with usernames containing the search.
 	 * 
 	 * @param text The text searched.
+	 * @param resultsPerPage Limit number of users per page.
+	 * @param page Number of page needed.
 	 * @return The recovered list.
 	 */
-	public List<User> searchUsers(final String text);
+	public List<User> searchUsers(final String text, int resultsPerPage, int page);
 }

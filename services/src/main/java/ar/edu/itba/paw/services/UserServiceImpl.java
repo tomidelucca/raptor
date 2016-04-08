@@ -27,8 +27,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> searchUsers(String text) {
-		List<User> ans = userDao.searchUsers(text);
+	public List<User> searchUsers(String text, int resultsPerPage, int page) {
+		List<User> ans = userDao.searchUsers(text, resultsPerPage, page);
 		if (ans == null) {
 			//TODO handle null
 		}

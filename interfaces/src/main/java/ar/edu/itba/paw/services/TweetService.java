@@ -30,47 +30,59 @@ public interface TweetService {
 	 * Get a user's list of tweets.
 	 * 
 	 * @param id The user's ID.
+	 * @param resultsPerPage Limit number of tweets per page.
+	 * @param page Number of page needed.
 	 * @return The recovered tweets.
 	 */
-	public List<Tweet> getTimeline(final String id);
+	public List<Tweet> getTimeline(final String id, int resultsPerPage, int page);
 	
 	/**
 	 * Get a user's feed tweets.
 	 * 
 	 * @param id The user's ID.
+	 * @param resultsPerPage Limit number of tweets per page.
+	 * @param page Number of page needed.
 	 * @return The recovered feed.
 	 */
-	public List<Tweet> getFeed(final String id);
+	public List<Tweet> getFeed(final String id, int resultsPerPage, int page);
 	
 	/**
 	 * Get a user's mentions.
 	 * 
 	 * @param id The user's ID.
+	 * @param resultsPerPage Limit number of tweets per page.
+	 * @param page Number of page needed.
 	 * @return The recovered mentions.
 	 */
-	public List<Tweet> getMentions(final String id);
+	public List<Tweet> getMentions(final String id, int resultsPerPage, int page);
 	
 	/**
 	 * Get a user's favourites.
 	 * 
 	 * @param id The user's ID.
+	 * @param resultsPerPage Limit number of tweets per page.
+	 * @param page Number of page needed.
 	 * @return The recovered favourites.
 	 */
-	public List<Tweet> getFavourites(final String id);
+	public List<Tweet> getFavourites(final String id, int resultsPerPage, int page);
 	
 	/**
 	 * Get a list of tweets with a hashtag.
 	 * 
 	 * @param hashtag The key hashtag.
+	 * @param resultsPerPage Limit number of tweets per page.
+	 * @param page Number of page needed.
 	 * @return The recovered list.
 	 */
-	public List<Tweet> getHashtag(final String hashtag);
+	public List<Tweet> getHashtag(final String hashtag, int resultsPerPage, int page);
 	
 	/**
 	 * Get a list of tweets containing the search.
 	 * 
 	 * @param text The text searched.
+	 * @param resultsPerPage Limit number of tweets per page.
+	 * @param page Number of page needed.
 	 * @return The recovered list.
 	 */
-	public List<Tweet> searchTweets(final String text);
+	public List<Tweet> searchTweets(final String text, int resultsPerPage, int page);
 }

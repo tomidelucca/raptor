@@ -34,11 +34,9 @@ public class UserJDBC implements UserDAO {
 	private static final String ID = "userID";
 	private static final String USERS = "users";
 	
-	private static final int USERLIST_SIZE = 10;
-	
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
 	private static final String SQL_GET_BY_USERNAME = "SELECT * FROM " + USERS + " WHERE " + USERNAME + " = ? LIMIT 1";
-	private static final String SQL_GET_USERS_CONTAINING = "select * from " + USERS + " where " + USERNAME + " LIKE ('%' || ? || '%') LIMIT "+ USERLIST_SIZE;
+	private static final String SQL_GET_USERS_CONTAINING = "select * from " + USERS + " where " + USERNAME + " LIKE ('%' || ? || '%')";
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
@@ -115,9 +113,9 @@ public class UserJDBC implements UserDAO {
 	}
 	
 	@Override
-	public List<User> searchUsers(String text) {
+	public List<User> searchUsers(String text, int resultsPerPage, int page) {
 		try{
-			return jdbcTemplate.query(SQL_GET_USERS_CONTAINING, userRowMapper, text);
+			return jdbcTemplate.query(SQL_GET_USERS_CONTAINING + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, userRowMapper, text);
 		} catch(Exception e) { return null; } //SQLException or DataAccessException
 	}
 	

@@ -31,7 +31,9 @@ public interface UserDAO {
      * Search for users.
      * 
      * @param text the searched text.
+	 * @param resultsPerPage limit number of users per page.
+	 * @param page number of page needed.
      * @return the list of users.
      */
-    List<User> searchUsers(final String text);
+    List<User> searchUsers(final String text, int resultsPerPage, int page);
 }
