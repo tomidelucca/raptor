@@ -56,7 +56,7 @@ public class TweetJDBC implements TweetDAO {
 						+ TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
 
 	private static final String SQL_GET_TWEETS_WITH_HASHTAG = "select " + TWEET_SELECT + " from " + TWEETS + ", " 
-			+ HASHTAGS + " where hashtags.tweetID = tweets.tweetID AND hashtags.hashtag = ? ORDER BY " 
+			+ HASHTAGS + ", " + USERS + " where hashtags.tweetID = tweets.tweetID AND tweets.userID = users.userID AND hashtag = ? ORDER BY " 
 			+ TIMESTAMP + " DESC LIMIT "+ TIMELINE_SIZE;
 	
 	private static final String SQL_GET_TWEETS_CONTAINING = "select " + TWEET_SELECT + " from " + TWEETS 

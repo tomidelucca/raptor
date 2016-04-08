@@ -52,8 +52,8 @@ public class HashtagJDBC implements HashtagDAO {
 		timestamp = new Timestamp(new Date().getTime());
 		try {
 		jdbcTemplate.execute(SQL_CREATE_TABLE + HASHTAGS + " ("
-				+ HASHTAG +" varchar(256) NOT NULL,"
-				+ TWEET_ID +" varchar(256) NOT NULL,"
+				+ HASHTAG +" varchar(256) NOT NULL, "
+				+ TWEET_ID +" varchar(256) NOT NULL, "
 				+ "PRIMARY KEY ("+ HASHTAG +" , " + TWEET_ID + "),"
 				+ "FOREIGN KEY ("+ TWEET_ID + ") REFERENCES " + TWEETS + " ON DELETE CASCADE ON UPDATE RESTRICT);");
 		} catch (DataAccessException e) {
@@ -64,8 +64,10 @@ public class HashtagJDBC implements HashtagDAO {
 
 	@Override
 	public void create(final String hashtag, final String tweetID) {
-		if(hashtag.length() >= 256)
+		System.out.println(hashtag);
+		if(hashtag.length() >= 256){
 			return;
+		}
 		final Map<String, Object> args = new HashMap<String, Object>();
 		args.put(HASHTAG, hashtag);
 		args.put(TWEET_ID, tweetID);

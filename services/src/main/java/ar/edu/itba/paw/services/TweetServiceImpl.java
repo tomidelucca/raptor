@@ -15,6 +15,9 @@ public class TweetServiceImpl implements TweetService {
 	@Autowired
 	private TweetDAO tweetDAO;
 	
+	@Autowired
+	private HashtagService hashtagService;
+	
 	//test
 	void setTweetDAO(TweetDAO tweetDAO) {
 		this.tweetDAO = tweetDAO;
@@ -27,8 +30,7 @@ public class TweetServiceImpl implements TweetService {
 			//TODO handle null (invalid message)
 		} else {
 			//TODO mentions handler
-			HashtagServiceImpl asd = new HashtagServiceImpl();
-			asd.register(t);
+			hashtagService.register(t);
 		}
 		return t;
 	}

@@ -50,7 +50,7 @@ public class Tweet {
 	 * @param msg The tweet's message.
 	 * @return List of hashtags.
 	 */
-	public static Set<String> getHashtag(String msg){
+	public Set<String> getHashtags(){
 		return patternFilter(msg, HASHTAG_PATTERN, "#");
 	}
 	
