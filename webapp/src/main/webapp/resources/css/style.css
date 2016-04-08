@@ -166,6 +166,10 @@ input[type="text"], input[type="password"] {
   word-wrap:break-word;
 }
 
+.panel-rawr a {
+  color: black;
+}
+
 .panel-rawr .profile-picture {
   height: 60px;
   width: 60px;
