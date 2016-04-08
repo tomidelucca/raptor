@@ -24,7 +24,7 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<c:set var="errorMessage" value="Ups! Search by hashtag isn't ready yet! Try again later." scope="request"/>
+				<c:set var="errorMessage" value="Ups! Something went wrong when searching." scope="request"/>
 				<jsp:include page="fragments/errorPage.jsp"/>
 			</c:otherwise>
 		</c:choose>
