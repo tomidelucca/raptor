@@ -45,6 +45,8 @@ public class SearchController {
         
         mav.addObject(SEARCH_TEXT, text);
         //TODO ver que hacer cuando se manda enter sin input
+        if(text.length()==0)
+        	return mav;
         switch(text.charAt(0)){
         	case '#':   mav.addObject(SEARCH_TYPE, TWEET_SEARCH);
 						List<Tweet> hashtags = tweetService.getHashtag(text.substring(1),TWEET_RESULTS_PER_PAGE,1);
