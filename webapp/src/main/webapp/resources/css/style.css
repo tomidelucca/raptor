@@ -96,20 +96,27 @@ input[type="text"], input[type="password"] {
   background: linear-gradient(to bottom, rgba(60,139,237,1) 0%, rgba(15,89,179,1) 100%);
   border-color: #246CC6;
   color: white;
+  max-width: 300px;
+  min-width: 200px;
+  margin-bottom: 20px;
 }
 
-.section-profile ul {
+.panel-profile a {
+  color:white;
+}
+
+.panel-profile ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-.section-profile li {
+.panel-profile li {
   display: block;
   text-align: center;
 }
 
-.section-profile .profile-picture {
+.panel-profile .profile-picture {
   margin: 20px 0px 20px 0px;
   height: 100px;
   width: 100px;
@@ -136,7 +143,6 @@ input[type="text"], input[type="password"] {
   text-transform: uppercase;
   text-decoration: none;
   color: black;
-  width: 100px;
   text-align: center;
 }
 

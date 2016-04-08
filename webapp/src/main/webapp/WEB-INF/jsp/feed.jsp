@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 
 <html>
-<jsp:include page="head.jsp" />
+<c:set var="pageTitle" value="Feed" scope="request"/>
+<jsp:include page="fragments/head.jsp"/>
 <body>
-<jsp:include page="navbar.jsp" />
+<jsp:include page="fragments/navbar.jsp" />
 <div class="container">
     <div class="row">
         <div class="col-md-2">

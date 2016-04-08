@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.services.UserService;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.util.List;
 
@@ -24,15 +25,12 @@ public class TimelineController {
 	private final static String REDIRECT = "redirect:";
 
 	private static final String TIMELINE = "timeline";
-	private static final String USER_EXIST = "userExists";
 
 	private final static String MAP_TWEET_ACTION = "/tweetAction";
 	
 	private static final String USERNAME = "username";
-	private static final String EMAIL = "email";
-	private static final String FIRSTNAME = "firstName";
-	private static final String LASTNAME = "lastName";
-	private static final String USER_ID = "userId";
+
+	private static final String USER = "user";
 	
 	private static final String TWEET_LIST = "tweetList";
 
@@ -49,14 +47,9 @@ public class TimelineController {
 		final ModelAndView mav = new ModelAndView(TIMELINE);
 		User u = userService.getUserWithUsername(username);
 
-		mav.addObject(USER_EXIST, u == null);
-
 		if(u != null){
-			mav.addObject(FIRSTNAME, u.getFirstName());
-			mav.addObject(LASTNAME, u.getLastName());
-			mav.addObject(USERNAME, u.getUsername());
-			mav.addObject(EMAIL, u.getEmail());
-			mav.addObject(USER_ID, u.getId());
+
+			mav.addObject(USER, u);
 
 			List<Tweet> tweetList = tweetService.getTimeline(u.getId());
 
@@ -66,9 +59,9 @@ public class TimelineController {
 		return mav;
 	}
 
-	@RequestMapping(value = MAP_USERS + MAP_TWEET_ACTION, method = RequestMethod.POST)
+	@RequestMapping(value = MAP_TWEET_ACTION, method = RequestMethod.POST)
 	public String registerAction(@RequestParam(value=MESSAGE, required=true) String message,
-								 @PathVariable(USERNAME) String username) {
+								 @RequestParam(value=USERNAME, required = true) String username) {
 
 		tweetService.register(message, userService.getUserWithUsername(username));
 
