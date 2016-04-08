@@ -1,20 +1,28 @@
 package ar.edu.itba.paw.services;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import ar.edu.itba.paw.models.Tweet;
 import ar.edu.itba.paw.persistence.HashtagDAO;
 
+@Service
 public class HashtagServiceImpl implements HashtagService {
 
 	@Autowired
 	private HashtagDAO hashtagDAO;
 	
 	@Override
-	public void register(final String hashtag, final String tweetID) {
-		hashtagDAO.create(hashtag, tweetID);
-	}
+	public void register(final Tweet tweet) {
+		Set<String> hashtags = tweet.getHashtags();
+		String id = tweet.getId();
+		for (String hs : hashtags) {
+			hashtagDAO.create(hs, id);
+		}
+ 	}
 
 	@Override
 	public List<String> getTrendingTopics() {

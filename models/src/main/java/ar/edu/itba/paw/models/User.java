@@ -7,7 +7,7 @@ public class User {
 	private final String email;
 	private final String firstName;
 	private final String lastName;
-	private final String miniBio = null;
+	@SuppressWarnings("unused")	private final String miniBio = null; //TODO use!
 
 	public User(String username, String email,
 			String firstName, String lastName, String id) {

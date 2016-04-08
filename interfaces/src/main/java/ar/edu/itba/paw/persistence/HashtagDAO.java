@@ -15,7 +15,7 @@ public interface HashtagDAO {
 	/**
 	 * Get a list of hashtags.
 	 * 
-	 * @return The list of TT.
+	 * @return The list of Trending Topics.
 	 */
 	List<String> getTrendingTopics();
 

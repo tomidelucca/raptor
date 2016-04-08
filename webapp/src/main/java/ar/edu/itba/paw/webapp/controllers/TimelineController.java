@@ -23,6 +23,7 @@ public class TimelineController {
 	private static final String MAP_USER = "/user/";
 	private static final String MAP_USERS = "/user/{username}";
 	private final static String REDIRECT = "redirect:";
+	private final static int TIMELINE_SIZE = 10;
 
 	private static final String TIMELINE = "timeline";
 
@@ -51,7 +52,7 @@ public class TimelineController {
 
 			mav.addObject(USER, u);
 
-			List<Tweet> tweetList = tweetService.getTimeline(u.getId());
+			List<Tweet> tweetList = tweetService.getTimeline(u.getId(), TIMELINE_SIZE, 1);
 
 			mav.addObject(TWEET_LIST, tweetList);
 

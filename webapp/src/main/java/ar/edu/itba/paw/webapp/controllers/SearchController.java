@@ -22,10 +22,13 @@ public class SearchController {
 	private final static String MAP_SEARCH = "/search";
 	private final static String SEARCH_TYPE = "searchType";
 	private final static String USER_SEARCH = "userSearch";
-	private final static String HASHTAG_SEARCH = "hashtagSearch";
+	private final static String HASHTAG_SEARCH = "hashtagSearch"; // por el momento puentie como TWEET_SEARCH XQ SE COMPORTA IGUAL
 	private final static String TWEET_SEARCH = "tweetSearch";	
 	private final static String RESULT = "resultList";
 	private final static String NUMBER_OF_RESULTS = "number";
+	
+	private final static int USER_RESULTS_PER_PAGE = 10;
+	private final static int TWEET_RESULTS_PER_PAGE = 10;
 	
 	private final static String SEARCH_TEXT = "searchText";
 	
@@ -43,16 +46,18 @@ public class SearchController {
         mav.addObject(SEARCH_TEXT, text);
         //TODO ver que hacer cuando se manda enter sin input
         switch(text.charAt(0)){
-        	case '#':   mav.addObject(SEARCH_TYPE, HASHTAG_SEARCH);
-						//TODO implementar hashtagSearch
+        	case '#':   mav.addObject(SEARCH_TYPE, TWEET_SEARCH);
+						List<Tweet> hashtags = tweetService.getHashtag(text.substring(1),TWEET_RESULTS_PER_PAGE,1);
+						mav.addObject(NUMBER_OF_RESULTS, hashtags.size());
+						mav.addObject(RESULT, hashtags);
 						break;
         	case '@':   mav.addObject(SEARCH_TYPE, USER_SEARCH);
-        				List<User> users = userService.searchUsers(text.substring(1));
+        				List<User> users = userService.searchUsers(text.substring(1),USER_RESULTS_PER_PAGE,1);
         				mav.addObject(NUMBER_OF_RESULTS, users.size());
         				mav.addObject(RESULT, users);
         				break;
         	default:	mav.addObject(SEARCH_TYPE, TWEET_SEARCH);
-						List<Tweet> tweets = tweetService.searchTweets(text);
+						List<Tweet> tweets = tweetService.searchTweets(text,TWEET_RESULTS_PER_PAGE,1);
 						mav.addObject(NUMBER_OF_RESULTS, tweets.size());
 						mav.addObject(RESULT, tweets);
 						break;
