@@ -6,6 +6,7 @@ import org.hsqldb.jdbc.JDBCDriver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -41,6 +42,7 @@ public class WebConfig  extends WebMvcConfigurerAdapter {
 	}
 
 	//--TODO-- Update to postgreSQL
+	/*
 	@Bean
 	public DataSource dataSource() {
 		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
@@ -48,6 +50,17 @@ public class WebConfig  extends WebMvcConfigurerAdapter {
 		ds.setUrl("jdbc:hsqldb:mem:paw");
 		ds.setUsername("hq");
 		ds.setPassword("");
+
+		return ds;
+	}
+	*/
+	@Bean
+	public DataSource dataSource() {
+		final DriverManagerDataSource ds = new DriverManagerDataSource();
+		ds.setDriverClassName("org.postgresql.Driver");
+		ds.setUrl("jdbc:postgresql://localhost:5432/raptor");
+		ds.setUsername("postgres");
+		ds.setPassword("raptor");
 
 		return ds;
 	}
