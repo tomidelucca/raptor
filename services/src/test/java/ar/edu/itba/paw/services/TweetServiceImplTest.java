@@ -44,16 +44,16 @@ public class TweetServiceImplTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+	/*@Test
 	public void registerTest() {	
 		ts.register(MESSAGE,USERID);
 		verify(tweetDao).create(eq(MESSAGE), eq(USERID));
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void getTimeLineTest() {
 		ts.getTimeline(ID);
 		verify(tweetDao).getTweetsByUserID(eq(ID));
-	}
+	}*/
 
 }

@@ -1,6 +1,7 @@
 package ar.edu.itba.paw.webapp.controllers;
 
 import ar.edu.itba.paw.models.Tweet;
+import ar.edu.itba.paw.services.HashtagService;
 import ar.edu.itba.paw.services.TweetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class TimelineController {
 	private static final String USER = "user";
 	
 	private static final String TWEET_LIST = "tweetList";
+	private static final String TRENDS_LIST = "trendsList";
 
 	private static final String MESSAGE = "message";
 	
@@ -43,6 +45,9 @@ public class TimelineController {
 
 	@Autowired
 	private TweetService tweetService;
+
+	@Autowired
+	private HashtagService hashtagService;
 
 	@RequestMapping(value={MAP_USERS, MAP_USERS_WITH_PAGING}, method= RequestMethod.GET)
 	public ModelAndView timeline(@PathVariable Map<String, String> pathVariables){
@@ -53,13 +58,13 @@ public class TimelineController {
 		User u = userService.getUserWithUsername(username);
 
 		if(u != null){
-
 			mav.addObject(USER, u);
 
 			List<Tweet> tweetList = tweetService.getTimeline(u.getId(), TIMELINE_SIZE, page);
+			List<String> trendsList = hashtagService.getTrendingTopics();
 
 			mav.addObject(TWEET_LIST, tweetList);
-
+			mav.addObject(TRENDS_LIST, trendsList);
 		}
 		return mav;
 	}

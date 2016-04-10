@@ -35,9 +35,13 @@ public class HashtagJDBC implements HashtagDAO {
 	private static final int INTERVAL = 12;
 		
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
-	private static final String SQL_GET_TRENDINGS = "SELECT " + HASHTAG + " FROM " 
+	/*private static final String SQL_GET_TRENDINGS = "SELECT " + HASHTAG + " FROM "
 					+ HASHTAGS + " WHERE " + TIME + " >= ? - INTERVAL " 
-					+ INTERVAL + " HOUR ORDER BY SUM(" + HASHTAG + ") DESCLIMIT " + LIMIT; 
+					+ INTERVAL + " HOUR ORDER BY SUM(" + HASHTAG + ") DESCLIMIT " + LIMIT;*/
+	private static final String SQL_GET_TRENDINGS = "SELECT hashtag, COUNT (hashtag) as hCount " +
+													"FROM hashtags " +
+													"GROUP BY hashtag " +
+													"ORDER BY hCount DESC;";
 
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
@@ -76,12 +80,16 @@ public class HashtagJDBC implements HashtagDAO {
 	@Override
 	public List<String> getTrendingTopics() {
 		try{
-			return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper, timestamp.getTime()); //TODO check timestamp
-		} catch(Exception e) { return null; } //DataAccessException or SQLException
+			//return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper, timestamp.getTime()); //TODO check timestamp
+			return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper);
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} //DataAccessException or SQLException
 	}
 	
 	private static class HashtagRowMapper implements RowMapper<String> {
-		
+
 		@Override
 		public String mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return rs.getString(HASHTAG);
