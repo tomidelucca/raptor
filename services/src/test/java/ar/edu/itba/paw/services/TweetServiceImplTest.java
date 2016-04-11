@@ -48,12 +48,20 @@ public class TweetServiceImplTest {
 	}
 
 	@Test
-	public void registerTest() {	
-		
+	public void registerTest() {
+		/*
+		ts.register(MESSAGE,USERID);
+		verify(tweetDao).create(eq(MESSAGE), eq(USERID));
+		*/
 	}
 	
 	@Test
 	public void getTimeLineTest() {
+
+		/*
+		ts.getTimeline(ID);
+		verify(tweetDao).getTweetsByUserID(eq(ID));
+		*/
 
 	}
 
