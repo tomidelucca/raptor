@@ -29,7 +29,7 @@
                     <c:set var="username" value="${user.username}" scope="request"/>
                     <jsp:include page="fragments/tweetBox.jsp"/>
                     <c:set var="tweetList" value="${tweetList}" scope="request"/>
-                    <c:set var="tweetListTitle" value="Timeline" scope="request"/>
+                    <c:set var="tweetListTitle" value="${tabSelected}" scope="request"/>
                     <jsp:include page="fragments/tweetList.jsp"/>
                 </div>
             </div>
