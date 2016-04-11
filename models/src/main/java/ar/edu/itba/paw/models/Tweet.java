@@ -34,14 +34,17 @@ public class Tweet {
 	 * @throws IllegalArgumentException
 	 */
 	public Tweet(final String msg, final String id, final User owner, final Timestamp timestamp) throws IllegalArgumentException {
-		int length = msg.length();
-		if (length > MAX_LENGTH || length <= 0 ) {
+		if (!isValidLength(msg)) {
 			throw new IllegalArgumentException(ERROR_LENGTH);
 		}
 		this.msg = msg;
 		this.id = id;
 		this.owner = owner;
 		this.timestamp = timestamp;
+	}
+	
+	private boolean isValidLength(String msg) {
+		return (msg.length() > MAX_LENGTH || msg.length() <= 0); 
 	}
 	
 	/**
@@ -60,7 +63,7 @@ public class Tweet {
 	 * @param msg The tweet's message.
 	 * @return List of mentinos.
 	 */
-	public static Set<String> getMentions(String msg){
+	public Set<String> getMentions(){
 		return patternFilter(msg, MENTION_PATTERN, "@");
 	}
 	
@@ -72,7 +75,7 @@ public class Tweet {
 	 * @param c A Special character.
 	 * @return
 	 */
-	private static Set<String> patternFilter(String msg, String pattern, String c) { 
+	private Set<String> patternFilter(String msg, String pattern, String c) { 
 		 Set<String> ans = new HashSet<String>();
 	     Pattern pt = Pattern.compile(pattern);
 	     Matcher matcher = pt.matcher(msg);

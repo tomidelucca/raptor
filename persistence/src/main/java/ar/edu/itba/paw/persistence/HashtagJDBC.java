@@ -60,7 +60,6 @@ public class HashtagJDBC implements HashtagDAO {
 		}
 	}
 
-
 	@Override
 	public void create(final String hashtag, final String tweetID) {
 		if(hashtag.length() >= 256){
@@ -69,7 +68,9 @@ public class HashtagJDBC implements HashtagDAO {
 		final Map<String, Object> args = new HashMap<String, Object>();
 		args.put(HASHTAG, hashtag);
 		args.put(TWEET_ID, tweetID);
-		jdbcInsert.execute(args);
+		try {
+			jdbcInsert.execute(args);
+		} catch (DataAccessException e) { return; }
 	}
 
 	@Override
