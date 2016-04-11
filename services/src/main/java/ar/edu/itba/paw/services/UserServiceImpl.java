@@ -20,14 +20,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User register(String username, String password, String email, String firstName, String lastName) {
+	public User register(final String username, final String password, final String email, final String firstName, final String lastName) {
 		User user = userDao.create(username, password, email, firstName, lastName);
 		//TODO handle null
 		return user;
 	}
 
 	@Override
-	public List<User> searchUsers(String text, int resultsPerPage, int page) {
+	public List<User> searchUsers(final String text, final int resultsPerPage, final int page) {
 		List<User> ans = userDao.searchUsers(text, resultsPerPage, page);
 		if (ans == null) {
 			//TODO handle null
@@ -36,17 +36,17 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User login(String username, String password) {
+	public User login(final String username, final String password) {
 		return null;
 	}
 
 	@Override
-	public User getUserWithId(String userId) {
+	public User getUserWithId(final String userId) {
 		return null;
 	}
 
 	@Override
-	public User getUserWithUsername(String username) {
+	public User getUserWithUsername(final String username) {
 		return userDao.getByUsername(username);
 	}
 }

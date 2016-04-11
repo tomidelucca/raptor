@@ -24,7 +24,7 @@ public interface TweetDAO {
 	 * @param page Number of page needed.
 	 * @return The user's list of tweets.
 	 */
-	List<Tweet> getTweetsByUserID(final String id, int resultsPerPage, int page);
+	List<Tweet> getTweetsByUserID(final String id, final int resultsPerPage, final int page);
 	
 	/**
 	 * Get a list of Tweets with a hashtag.
@@ -34,7 +34,7 @@ public interface TweetDAO {
 	 * @param page number of page needed.
 	 * @return the list
 	 */
-	List<Tweet> getTweetsByHashtag(final String hashtag, int resultsPerPage, int page);
+	List<Tweet> getTweetsByHashtag(final String hashtag, final int resultsPerPage, final int page);
 
 	 /**
      * Search for tweets.
@@ -44,5 +44,5 @@ public interface TweetDAO {
 	 * @param page number of page needed.
      * @return the list of tweets.
      */
-    List<Tweet> searchTweets(final String text, int resultsPerPage, int page);
+    List<Tweet> searchTweets(final String text, final int resultsPerPage, final int page);
 }

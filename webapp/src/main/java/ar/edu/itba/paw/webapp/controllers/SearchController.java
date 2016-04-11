@@ -22,7 +22,6 @@ public class SearchController {
 	private final static String MAP_SEARCH = "/search";
 	private final static String SEARCH_TYPE = "searchType";
 	private final static String USER_SEARCH = "userSearch";
-	private final static String HASHTAG_SEARCH = "hashtagSearch"; // por el momento puentie como TWEET_SEARCH XQ SE COMPORTA IGUAL
 	private final static String TWEET_SEARCH = "tweetSearch";	
 	private final static String RESULT = "resultList";
 	private final static String NUMBER_OF_RESULTS = "number";

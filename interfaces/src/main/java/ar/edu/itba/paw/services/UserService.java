@@ -51,5 +51,5 @@ public interface UserService {
 	 * @param page Number of page needed.
 	 * @return The recovered list.
 	 */
-	public List<User> searchUsers(final String text, int resultsPerPage, int page);
+	public List<User> searchUsers(final String text, final int resultsPerPage, final int page);
 }

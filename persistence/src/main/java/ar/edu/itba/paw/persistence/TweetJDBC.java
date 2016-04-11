@@ -101,7 +101,7 @@ public class TweetJDBC implements TweetDAO {
 	}
 
 	@Override
-	public List<Tweet> getTweetsByUserID(final String id, int resultsPerPage, int page) { //TODO update adding retweets
+	public List<Tweet> getTweetsByUserID(final String id, final int resultsPerPage, final int page) { //TODO update adding retweets
 		try{
 			return jdbcTemplate.query(SQL_GET_TWEETS + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, id);
 		}catch(Exception e) { return null; } //DataAccessException or SQLException
@@ -128,14 +128,14 @@ public class TweetJDBC implements TweetDAO {
 	}
 	
 	@Override
-	public List<Tweet> getTweetsByHashtag(final String hashtag, int resultsPerPage, int page) {
+	public List<Tweet> getTweetsByHashtag(final String hashtag, final int resultsPerPage, final int page) {
 		try{
 			return jdbcTemplate.query(SQL_GET_TWEETS_WITH_HASHTAG + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, hashtag);
 		}catch(Exception e) { return null; } //DataAccessException or SQLException
 	}
 	
 	@Override
-	public List<Tweet> searchTweets(String text, int resultsPerPage, int page) {
+	public List<Tweet> searchTweets(String text, final int resultsPerPage, final int page) {
 		try{
 			final List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS_CONTAINING + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, text);
 			return ans;

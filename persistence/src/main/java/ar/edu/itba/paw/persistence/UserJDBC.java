@@ -101,7 +101,7 @@ public class UserJDBC implements UserDAO {
 
 	//TODO SQL injection?
 	@Override
-	public User getByUsername(String username) {
+	public User getByUsername(final String username) {
 
 		try{
 			final List<User> list = jdbcTemplate.query(SQL_GET_BY_USERNAME, userRowMapper, username);
@@ -113,7 +113,7 @@ public class UserJDBC implements UserDAO {
 	}
 	
 	@Override
-	public List<User> searchUsers(String text, int resultsPerPage, int page) {
+	public List<User> searchUsers(final String text, final int resultsPerPage, final int page) {
 		try{
 			return jdbcTemplate.query(SQL_GET_USERS_CONTAINING + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, userRowMapper, text);
 		} catch(Exception e) { return null; } //SQLException or DataAccessException
