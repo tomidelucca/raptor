@@ -25,8 +25,8 @@ public class HashtagServiceImpl implements HashtagService {
  	}
 
 	@Override
-	public List<String> getTrendingTopics() {
-		List<String> ans = hashtagDAO.getTrendingTopics();
+	public List<String> getTrendingTopics(final int count) {
+		List<String> ans = hashtagDAO.getTrendingTopics(count);
 		if (ans == null) {
 			//TODO handle null (db error)
 		}

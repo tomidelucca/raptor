@@ -16,8 +16,9 @@ public interface HashtagService {
 	/**
 	 * Get a user's list of hashtags.
 	 * 
+	 * @param count Number of results expecting.
 	 * @return The recovered hashtags.
 	 */
-	public List<String> getTrendingTopics();
+	public List<String> getTrendingTopics(final int count);
 
 }

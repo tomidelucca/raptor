@@ -2,7 +2,6 @@ package ar.edu.itba.paw.persistence;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,30 +31,24 @@ public class HashtagJDBC implements HashtagDAO {
 	private static final String TWEETS = "tweets";
 	private static final String TIME = "timestamp";
 	
-	private static final int LIMIT = 5;
 	private static final int INTERVAL = 3600; // in seconds
 		
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
-	/*private static final String SQL_GET_TRENDINGS = "SELECT " + HASHTAG + " FROM "
-					+ HASHTAGS + " WHERE " + TIME + " >= ? - INTERVAL " 
-					+ INTERVAL + " HOUR ORDER BY SUM(" + HASHTAG + ") DESCLIMIT " + LIMIT;*/
-	private static final String SQL_GET_TRENDINGS = "SELECT " + HASHTAG + ", COUNT (" + HASHTAG + ") as hCount " +
-													"FROM " + HASHTAGS + ", " + TWEETS + 
+	private static final String SQL_GET_TRENDINGS = "SELECT " + HASHTAG + ", COUNT (" + HASHTAG + ") as hCount, MAX(" + TIME + ") as maxTime" +
+													" FROM " + HASHTAGS + ", " + TWEETS + 
 													" WHERE " + TWEETS + "." + TWEET_ID + " = " + HASHTAGS + "." + TWEET_ID + 
 													" AND (UNIX_TIMESTAMP(?)-UNIX_TIMESTAMP(" + TIME + ")) <= "+ INTERVAL +
-													" GROUP BY " + HASHTAG + " ORDER BY hCount DESC LIMIT " + LIMIT;
+													" GROUP BY " + HASHTAG + " ORDER BY hCount DESC, maxTime DESC LIMIT ?";
 
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
 	private final HashtagRowMapper hashtagRowMapper;
-	private final Timestamp timestamp;
 
 	@Autowired
 	public HashtagJDBC(final DataSource ds) {
 		hashtagRowMapper = new HashtagRowMapper();
 		jdbcTemplate = new JdbcTemplate(ds);
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName(HASHTAGS);
-		timestamp = new Timestamp(new Date().getTime());
 		try {
 		jdbcTemplate.execute(SQL_CREATE_TABLE + HASHTAGS + " ("
 				+ HASHTAG +" varchar(256) NOT NULL, "
@@ -80,10 +73,9 @@ public class HashtagJDBC implements HashtagDAO {
 	}
 
 	@Override
-	public List<String> getTrendingTopics() {
+	public List<String> getTrendingTopics(final int count) {
 		try{
-			//return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper, timestamp.getTime()); //TODO check timestamp
-			return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper, new Timestamp(new Date().getTime()));
+			return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper, new Timestamp(new Date().getTime()), count);
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			return null;

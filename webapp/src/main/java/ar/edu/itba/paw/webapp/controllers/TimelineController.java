@@ -40,6 +40,8 @@ public class TimelineController {
 
 	private static final String MESSAGE = "message";
 	
+	private static final int TRENDING_TOPIC_LIMIT = 5;
+	
 	@Autowired
 	private UserService userService;
 
@@ -61,7 +63,7 @@ public class TimelineController {
 			mav.addObject(USER, u);
 
 			List<Tweet> tweetList = tweetService.getTimeline(u.getId(), TIMELINE_SIZE, page);
-			List<String> trendsList = hashtagService.getTrendingTopics();
+			List<String> trendsList = hashtagService.getTrendingTopics(TRENDING_TOPIC_LIMIT);
 
 			mav.addObject(TWEET_LIST, tweetList);
 			mav.addObject(TRENDS_LIST, trendsList);
