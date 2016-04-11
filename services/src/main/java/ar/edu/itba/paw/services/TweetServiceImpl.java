@@ -18,6 +18,9 @@ public class TweetServiceImpl implements TweetService {
 	@Autowired
 	private HashtagService hashtagService;
 	
+	@Autowired
+	private MentionService mentionService;
+	
 	//test
 	void setTweetDAO(TweetDAO tweetDAO) {
 		this.tweetDAO = tweetDAO;
@@ -31,6 +34,7 @@ public class TweetServiceImpl implements TweetService {
 		} else {
 			//TODO mentions handler
 			hashtagService.register(t);
+			mentionService.register(t);
 		}
 		return t;
 	}
@@ -58,8 +62,11 @@ public class TweetServiceImpl implements TweetService {
 
 	@Override
 	public List<Tweet> getMentions(final String id, final int resultsPerPage, final int page) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Tweet> ans = tweetDAO.getTweetsByMention(id, resultsPerPage, page);
+		if (ans == null) {
+			//TODO handle null (db error)
+		}
+		return ans;
 	}
 
 	@Override

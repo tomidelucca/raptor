@@ -36,6 +36,16 @@ public interface TweetDAO {
 	 */
 	List<Tweet> getTweetsByHashtag(final String hashtag, final int resultsPerPage, final int page);
 
+	/**
+	 * Get a list of Tweets mentioning a user.
+	 * 
+	 * @param userID the id of the user.
+	 * @param resultsPerPage limit number of tweets per page.
+	 * @param page number of page needed.
+	 * @return the list
+	 */
+	List<Tweet> getTweetsByMention(final String userID, final int resultsPerPage, final int page);
+
 	 /**
      * Search for tweets.
      * 

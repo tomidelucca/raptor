@@ -44,7 +44,7 @@ public class Tweet {
 	}
 	
 	private boolean isValidLength(String msg) {
-		return (msg.length() > MAX_LENGTH || msg.length() <= 0); 
+		return (msg.length() <= MAX_LENGTH && msg.length() > 0); 
 	}
 	
 	/**

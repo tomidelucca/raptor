@@ -37,6 +37,7 @@ public class TweetJDBC implements TweetDAO {
 	private static final String TWEETS = "tweets";
 	
 	private static final String HASHTAGS = "hashtags";
+	private static final String MENTIONS = "mentions";
 	private static final String USERS = "users";
 	private static final String USERNAME = "username";
 	private static final String FIRST_NAME = "firstName";
@@ -56,6 +57,11 @@ public class TweetJDBC implements TweetDAO {
 	private static final String SQL_GET_TWEETS_WITH_HASHTAG = "select " + TWEET_SELECT + " from " + TWEETS + ", " 
 			+ HASHTAGS + ", " + USERS + " where hashtags.tweetID = tweets.tweetID AND tweets.userID = users.userID AND hashtag = ? ORDER BY " 
 			+ TIMESTAMP + " DESC";
+	
+	private static final String SQL_GET_TWEETS_WITH_MENTION = "select " + TWEET_SELECT + " from " + TWEETS + ", " 
+			+ MENTIONS + ", " + USERS + " where " + MENTIONS + ".tweetID = tweets.tweetID AND tweets.userID = users.userID AND " + MENTIONS + ".userID = ? ORDER BY " 
+			+ TIMESTAMP + " DESC";
+	
 	
 	private static final String SQL_GET_TWEETS_CONTAINING = "select " + TWEET_SELECT + " from " + TWEETS 
 						+ ", " + USERS + " where users.userID = tweets.userID AND " + MESSAGE 
@@ -135,6 +141,13 @@ public class TweetJDBC implements TweetDAO {
 	}
 	
 	@Override
+	public List<Tweet> getTweetsByMention(final String userID, final int resultsPerPage, final int page) {
+		try{
+			return jdbcTemplate.query(SQL_GET_TWEETS_WITH_MENTION + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, userID);
+		}catch(Exception e) { return null; } //DataAccessException or SQLException
+	}
+	
+	@Override
 	public List<Tweet> searchTweets(String text, final int resultsPerPage, final int page) {
 		try{
 			final List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS_CONTAINING + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, text);
@@ -152,5 +165,4 @@ public class TweetJDBC implements TweetDAO {
 		}
 
 	}
-	
 }

@@ -103,7 +103,7 @@ public class UserJDBC implements UserDAO {
 	}
 	
 	private boolean isValidUser(final String username, final String password, final String email, final String firstName, final String lastName) {
-		return (username.length() >= 256 || password.length() >= 256 || email.length() >= 256 || firstName.length() >= 256 || lastName.length() >= 256);
+		return (username.length() <= 256 && password.length() <= 256 && email.length() <= 256 && firstName.length() <= 256 && lastName.length() <= 256);
 	}
 
 	//TODO SQL injection?
