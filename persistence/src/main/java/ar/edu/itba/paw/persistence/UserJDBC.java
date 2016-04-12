@@ -39,7 +39,7 @@ public class UserJDBC implements UserDAO {
 	private static final int	EMAIL_MAX_LENGTH = 100;
 	private static final int	FIRSTNAME_MAX_LENGTH = 100;
 	private static final int	LASTNAME_MAX_LENGTH = 100;
-	private static final int	ID_LENGTH = 12;
+	private static final int	USER_ID_LENGTH = 12;
 	
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
 	private static final String SQL_GET_BY_USERNAME = "SELECT * FROM " + USERS + " WHERE " + USERNAME + " = ? LIMIT 1";
@@ -61,7 +61,7 @@ public class UserJDBC implements UserDAO {
 				+ EMAIL + " varchar(" + EMAIL_MAX_LENGTH + ") NOT NULL,"
 				+ FIRSTNAME + " varchar(" + FIRSTNAME_MAX_LENGTH + ") NOT NULL,"
 				+ LASTNAME + " varchar(" + LASTNAME_MAX_LENGTH + ") NOT NULL,"
-				+ ID + " char(" + ID_LENGTH + ") NOT NULL,"
+				+ ID + " char(" + USER_ID_LENGTH + ") NOT NULL,"
 				+ "PRIMARY KEY ("+ ID +"));");
 		} catch (DataAccessException e) {
 			//TODO db error
@@ -80,7 +80,7 @@ public class UserJDBC implements UserDAO {
 		String userId = "";
 		Random rand = new Random();
 
-		int i = ID_LENGTH;
+		int i = USER_ID_LENGTH;
 		while(i>0){
 			userId += characterArray[rand.nextInt(characterArray.length)];
 			i--;
