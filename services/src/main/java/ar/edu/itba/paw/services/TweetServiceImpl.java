@@ -100,4 +100,12 @@ public class TweetServiceImpl implements TweetService {
 		}
 		return ans;
 	}
+
+	public List<Tweet> globalFeed(int resultsPerPage, int page) {
+		List<Tweet> ans = tweetDAO.getGlobalFeed(resultsPerPage, page);
+		if(ans == null) {
+			// TODO handle null
+		}
+		return ans;
+	}
 }

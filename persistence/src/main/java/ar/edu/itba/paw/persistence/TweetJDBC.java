@@ -75,24 +75,29 @@ public class TweetJDBC implements TweetDAO {
 	private static final String SQL_GET_TWEETS_CONTAINING = "select " + TWEET_SELECT + " from " + TWEETS 
 						+ ", " + USERS + " where " + USERS + "." + USER_ID + " = " + TWEETS + "." + USER_ID + 
 						" AND " + MESSAGE + " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " DESC";
+
+	private static final String SQL_GET_GLOBAL_FEED = "select " + TWEET_SELECT + " from " + TWEETS + ", "
+						+ USERS + " where " + USERS + "." + USER_ID + " = " + TWEETS + "." + USER_ID
+						+ " ORDER BY " + TIMESTAMP + " DESC";
+
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
 	private final TweetRowMapper tweetRowMapper;
-	
+
 	@Autowired
 	public TweetJDBC(final DataSource ds) {
 		tweetRowMapper = new TweetRowMapper();
 		jdbcTemplate = new JdbcTemplate(ds);
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName(TWEETS);
 		try{
-		jdbcTemplate.execute(SQL_CREATE_TABLE + TWEETS + " ("
-				+ ID +" char(" + TWEET_ID_LENGTH + ") NOT NULL,"
-				+ MESSAGE +" varchar(" + MESSAGE_MAX_LENGTH + ") NOT NULL,"
-				+ USER_ID +" char(" + USER_ID_LENGTH + ") NOT NULL," 
-				+ TIMESTAMP +" TIMESTAMP NOT NULL,"
-				+ "PRIMARY KEY ("+ ID +"),"
-				+ "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USERS + " ON DELETE CASCADE ON UPDATE RESTRICT);");
+			jdbcTemplate.execute(SQL_CREATE_TABLE + TWEETS + " ("
+					+ ID +" char(" + TWEET_ID_LENGTH + ") NOT NULL,"
+					+ MESSAGE +" varchar(" + MESSAGE_MAX_LENGTH + ") NOT NULL,"
+					+ USER_ID +" char(" + USER_ID_LENGTH + ") NOT NULL,"
+					+ TIMESTAMP +" TIMESTAMP NOT NULL,"
+					+ "PRIMARY KEY ("+ ID +"),"
+					+ "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USERS + " ON DELETE CASCADE ON UPDATE RESTRICT);");
 		} catch (DataAccessException e) {
 			//TODO db error
 		}
@@ -162,6 +167,16 @@ public class TweetJDBC implements TweetDAO {
 			final List<Tweet> ans = jdbcTemplate.query(SQL_GET_TWEETS_CONTAINING + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, text);
 			return ans;
 		} catch(Exception e){
+			return null;
+		}
+	}
+
+	@Override
+	public  List<Tweet> getGlobalFeed(final int resultsPerPage, final int page) {
+		try {
+			final List<Tweet> ans = jdbcTemplate.query(SQL_GET_GLOBAL_FEED + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper);
+			return ans;
+		} catch (Exception e){
 			return null;
 		}
 	}
