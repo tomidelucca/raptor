@@ -15,8 +15,9 @@ public interface HashtagDAO {
 	/**
 	 * Get a list of hashtags.
 	 * 
+	 * @param count Number of results expecting.
 	 * @return The list of Trending Topics.
 	 */
-	List<String> getTrendingTopics();
+	List<String> getTrendingTopics(final int count);
 
 }

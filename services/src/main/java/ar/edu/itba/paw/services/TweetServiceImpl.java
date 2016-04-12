@@ -18,6 +18,9 @@ public class TweetServiceImpl implements TweetService {
 	@Autowired
 	private HashtagService hashtagService;
 	
+	@Autowired
+	private MentionService mentionService;
+	
 	//test
 	void setTweetDAO(TweetDAO tweetDAO) {
 		this.tweetDAO = tweetDAO;
@@ -35,12 +38,13 @@ public class TweetServiceImpl implements TweetService {
 		} else {
 			//TODO mentions handler
 			hashtagService.register(t);
+			mentionService.register(t);
 		}
 		return t;
 	}
 	
 	@Override
-	public List<Tweet> getTimeline(final String id, int resultsPerPage, int page) {
+	public List<Tweet> getTimeline(final String id, final int resultsPerPage, final int page) {
 		List<Tweet> ans = tweetDAO.getTweetsByUserID(id, resultsPerPage, page);
 		if (ans == null) {
 			//TODO handle null (db error)
@@ -55,25 +59,28 @@ public class TweetServiceImpl implements TweetService {
 	}
 
 	@Override
-	public List<Tweet> getFeed(final String id, int resultsPerPage, int page) {
+	public List<Tweet> getFeed(final String id, final int resultsPerPage, final int page) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Tweet> getMentions(final String id, int resultsPerPage, int page) {
+	public List<Tweet> getMentions(final String id, final int resultsPerPage, final int page) {
+		List<Tweet> ans = tweetDAO.getTweetsByMention(id, resultsPerPage, page);
+		if (ans == null) {
+			//TODO handle null (db error)
+		}
+		return ans;
+	}
+
+	@Override
+	public List<Tweet> getFavourites(final String id, final int resultsPerPage, final int page) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Tweet> getFavourites(final String id, int resultsPerPage, int page) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Tweet> getHashtag(final String hashtag, int resultsPerPage, int page) {
+	public List<Tweet> getHashtag(final String hashtag, final int resultsPerPage, final int page) {
 		List<Tweet> ans = tweetDAO.getTweetsByHashtag(hashtag, resultsPerPage, page);
 		if (ans == null) {
 			//TODO handle null (db error)
@@ -82,7 +89,7 @@ public class TweetServiceImpl implements TweetService {
 	}
 	
 	@Override
-	public List<Tweet> searchTweets(String text, int resultsPerPage, int page) {
+	public List<Tweet> searchTweets(final String text, final int resultsPerPage, final int page) {
 		List<Tweet> ans = tweetDAO.searchTweets(text, resultsPerPage, page);
 		if (ans == null) {
 			//TODO handle null

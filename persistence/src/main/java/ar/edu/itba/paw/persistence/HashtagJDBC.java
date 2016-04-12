@@ -31,25 +31,24 @@ public class HashtagJDBC implements HashtagDAO {
 	private static final String TWEETS = "tweets";
 	private static final String TIME = "timestamp";
 	
-	private static final int LIMIT = 5;
-	private static final int INTERVAL = 12;
+	private static final int INTERVAL = 3600; // in seconds
 		
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
-	private static final String SQL_GET_TRENDINGS = "SELECT " + HASHTAG + " FROM " 
-					+ HASHTAGS + " WHERE " + TIME + " >= ? - INTERVAL " 
-					+ INTERVAL + " HOUR ORDER BY SUM(" + HASHTAG + ") DESCLIMIT " + LIMIT; 
+	private static final String SQL_GET_TRENDINGS = "SELECT " + HASHTAG + ", COUNT (" + HASHTAG + ") as hCount, MAX(" + TIME + ") as maxTime" +
+													" FROM " + HASHTAGS + ", " + TWEETS + 
+													" WHERE " + TWEETS + "." + TWEET_ID + " = " + HASHTAGS + "." + TWEET_ID + 
+													" AND (UNIX_TIMESTAMP(?)-UNIX_TIMESTAMP(" + TIME + ")) <= "+ INTERVAL +
+													" GROUP BY " + HASHTAG + " ORDER BY hCount DESC, maxTime DESC LIMIT ?";
 
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
 	private final HashtagRowMapper hashtagRowMapper;
-	private final Timestamp timestamp;
 
 	@Autowired
 	public HashtagJDBC(final DataSource ds) {
 		hashtagRowMapper = new HashtagRowMapper();
 		jdbcTemplate = new JdbcTemplate(ds);
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName(HASHTAGS);
-		timestamp = new Timestamp(new Date().getTime());
 		try {
 		jdbcTemplate.execute(SQL_CREATE_TABLE + HASHTAGS + " ("
 				+ HASHTAG +" varchar(256) NOT NULL, "
@@ -61,7 +60,6 @@ public class HashtagJDBC implements HashtagDAO {
 		}
 	}
 
-
 	@Override
 	public void create(final String hashtag, final String tweetID) {
 		if(hashtag.length() >= 256){
@@ -70,18 +68,23 @@ public class HashtagJDBC implements HashtagDAO {
 		final Map<String, Object> args = new HashMap<String, Object>();
 		args.put(HASHTAG, hashtag);
 		args.put(TWEET_ID, tweetID);
-		jdbcInsert.execute(args);
+		try {
+			jdbcInsert.execute(args);
+		} catch (DataAccessException e) { return; }
 	}
 
 	@Override
-	public List<String> getTrendingTopics() {
+	public List<String> getTrendingTopics(final int count) {
 		try{
-			return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper, timestamp.getTime()); //TODO check timestamp
-		} catch(Exception e) { return null; } //DataAccessException or SQLException
+			return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper, new Timestamp(new Date().getTime()), count);
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		} //DataAccessException or SQLException
 	}
 	
 	private static class HashtagRowMapper implements RowMapper<String> {
-		
+
 		@Override
 		public String mapRow(ResultSet rs, int rowNum) throws SQLException {
 			return rs.getString(HASHTAG);

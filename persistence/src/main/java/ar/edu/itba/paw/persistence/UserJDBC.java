@@ -84,7 +84,7 @@ public class UserJDBC implements UserDAO {
 
 	@Override
 	public User create(final String username, final String password, final String email, final String firstName, final String lastName) {
-		if(username.length() >= 256 || password.length() >= 256 || email.length() >= 256 || firstName.length() >= 256 || lastName.length() >= 256 )
+		if(!isValidUser(username, password, email, firstName, lastName))
 			return null;
 		final Map<String, Object> args = new HashMap<String, Object>();
 		args.put(USERNAME, username);
@@ -94,14 +94,21 @@ public class UserJDBC implements UserDAO {
 		args.put(LASTNAME, lastName);
         String userId = randomUserId();
 		args.put(ID, userId);
-		jdbcInsert.execute(args);
+		try {
+
+			jdbcInsert.execute(args);
+		} catch (DataAccessException e) { return null; }
 
 		return new User(username, email, firstName, lastName, userId);
+	}
+	
+	private boolean isValidUser(final String username, final String password, final String email, final String firstName, final String lastName) {
+		return (username.length() <= 256 && password.length() <= 256 && email.length() <= 256 && firstName.length() <= 256 && lastName.length() <= 256);
 	}
 
 	//TODO SQL injection?
 	@Override
-	public User getByUsername(String username) {
+	public User getByUsername(final String username) {
 
 		try{
 			final List<User> list = jdbcTemplate.query(SQL_GET_BY_USERNAME, userRowMapper, username);
@@ -113,7 +120,7 @@ public class UserJDBC implements UserDAO {
 	}
 	
 	@Override
-	public List<User> searchUsers(String text, int resultsPerPage, int page) {
+	public List<User> searchUsers(final String text, final int resultsPerPage, final int page) {
 		try{
 			return jdbcTemplate.query(SQL_GET_USERS_CONTAINING + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, userRowMapper, text);
 		} catch(Exception e) { return null; } //SQLException or DataAccessException

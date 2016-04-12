@@ -39,6 +39,8 @@ private static final String USERNAME = "@testUser", EMAIL = "testUser@gmail.com"
 
 private static Timestamp timestamp;
 
+private static int COUNT = 1;
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		timestamp = new Timestamp(System.currentTimeMillis());
@@ -78,8 +80,8 @@ private static Timestamp timestamp;
 	
 	@Test
 	public void getTrendingTopicsTest() {
-		hs.getTrendingTopics();
-		verify(hashtagDao).getTrendingTopics();
+		hs.getTrendingTopics(COUNT);
+		verify(hashtagDao).getTrendingTopics(eq(COUNT));
 		
 	}
 

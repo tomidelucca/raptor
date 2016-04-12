@@ -34,7 +34,7 @@ public interface TweetService {
 	 * @param page Number of page needed.
 	 * @return The recovered tweets.
 	 */
-	public List<Tweet> getTimeline(final String id, int resultsPerPage, int page);
+	public List<Tweet> getTimeline(final String id, final int resultsPerPage, final int page);
 	
 	/**
 	 * Get a user's feed tweets.
@@ -44,7 +44,7 @@ public interface TweetService {
 	 * @param page Number of page needed.
 	 * @return The recovered feed.
 	 */
-	public List<Tweet> getFeed(final String id, int resultsPerPage, int page);
+	public List<Tweet> getFeed(final String id, final int resultsPerPage, final int page);
 	
 	/**
 	 * Get a user's mentions.
@@ -54,7 +54,7 @@ public interface TweetService {
 	 * @param page Number of page needed.
 	 * @return The recovered mentions.
 	 */
-	public List<Tweet> getMentions(final String id, int resultsPerPage, int page);
+	public List<Tweet> getMentions(final String id, final int resultsPerPage, final int page);
 	
 	/**
 	 * Get a user's favourites.
@@ -64,7 +64,7 @@ public interface TweetService {
 	 * @param page Number of page needed.
 	 * @return The recovered favourites.
 	 */
-	public List<Tweet> getFavourites(final String id, int resultsPerPage, int page);
+	public List<Tweet> getFavourites(final String id, final int resultsPerPage, final int page);
 	
 	/**
 	 * Get a list of tweets with a hashtag.
@@ -74,7 +74,7 @@ public interface TweetService {
 	 * @param page Number of page needed.
 	 * @return The recovered list.
 	 */
-	public List<Tweet> getHashtag(final String hashtag, int resultsPerPage, int page);
+	public List<Tweet> getHashtag(final String hashtag, final int resultsPerPage, final int page);
 	
 	/**
 	 * Get a list of tweets containing the search.
@@ -84,5 +84,5 @@ public interface TweetService {
 	 * @param page Number of page needed.
 	 * @return The recovered list.
 	 */
-	public List<Tweet> searchTweets(final String text, int resultsPerPage, int page);
+	public List<Tweet> searchTweets(final String text, final int resultsPerPage, final int page);
 }

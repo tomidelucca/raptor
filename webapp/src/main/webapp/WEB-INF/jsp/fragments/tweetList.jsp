@@ -11,8 +11,8 @@
                     <img class="profile-picture center-block" src="/resources/img/default-pic.png"/>
                 </div>
                 <div class="col-xs-8 col-sm-10 col-md-10">
-                    <span>${tweet.owner.firstName} ${tweet.owner.lastName}</></span>
-                    <a href="../user/${tweet.owner.username}" style="color: #9B9B9B;">@${tweet.owner.username}</a>
+                    <a href="/user/${tweet.owner.username}">${tweet.owner.firstName} ${tweet.owner.lastName}</></a>
+                    <a href="/user/${tweet.owner.username}" style="color: #9B9B9B;">@${tweet.owner.username}</a>
                     <span style="color: #9B9B9B" class="pull-right">${tweet.timestamp}</span><br/><br/>
                     <span style="font-size:1.2em;">${tweet.msg}</span>
                 </div>

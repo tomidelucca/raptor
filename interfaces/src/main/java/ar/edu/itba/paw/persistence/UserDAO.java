@@ -35,5 +35,5 @@ public interface UserDAO {
 	 * @param page number of page needed.
      * @return the list of users.
      */
-    List<User> searchUsers(final String text, int resultsPerPage, int page);
+    List<User> searchUsers(final String text, final int resultsPerPage, final int page);
 }

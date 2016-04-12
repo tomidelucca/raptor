@@ -70,14 +70,6 @@ public class TweetServiceImplTest {
 		
 		
 	}
-	
-	@Test
-	public void getTimeLineTest() {
-
-		ts.getTimeline(UID, RESULTSPERPAGE, PAGE);
-		verify(tweetDao).getTweetsByUserID(eq(UID), eq(RESULTSPERPAGE), eq(PAGE));
-
-	}
 
 	
 	@Test

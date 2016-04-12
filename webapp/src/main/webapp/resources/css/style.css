@@ -97,7 +97,7 @@ input[type="text"], input[type="password"] {
   border-color: #246CC6;
   color: white;
   max-width: 300px;
-  min-width: 200px;
+  min-width: 150px;
   margin-bottom: 20px;
 }
 
@@ -164,6 +164,7 @@ input[type="text"], input[type="password"] {
   padding: 10px;
   padding-bottom: 20px;
   word-wrap:break-word;
+  overflow-wrap: break-word;
 }
 
 .panel-rawr a {
@@ -177,6 +178,22 @@ input[type="text"], input[type="password"] {
   border: solid 2px;
   border-color: #dadada;
   text-align: center;
+}
+
+.panel-trends {
+  padding: 10px;
+  min-width: 150px;
+  word-break: break-all;
+  -ms-word-break: break-all;
+}
+
+.panel-trends>h5 {
+  text-align: center;
+}
+
+.panel-trends>ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 .section-not-found .raptor-logo {

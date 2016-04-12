@@ -17,7 +17,7 @@
         <c:choose>
         <c:when test="${user != null}">
             <div class="section-profile">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="row">
                         <c:set var="user" value="${user}" scope="request"/>
                         <jsp:include page="fragments/profileBox.jsp"/>
@@ -25,12 +25,18 @@
                 </div>
             </div>
             <div class="section-timeline">
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <c:set var="username" value="${user.username}" scope="request"/>
                     <jsp:include page="fragments/tweetBox.jsp"/>
                     <c:set var="tweetList" value="${tweetList}" scope="request"/>
-                    <c:set var="tweetListTitle" value="Timeline" scope="request"/>
+                    <c:set var="tweetListTitle" value="${tabSelected}" scope="request"/>
                     <jsp:include page="fragments/tweetList.jsp"/>
+                </div>
+            </div>
+            <div class="section-trends">
+                <div class="col-md-2" style="padding-left:0px;">
+                    <c:set var="trendsList" value="${trendsList}" scope="request"/>
+                    <jsp:include page="fragments/trendingBox.jsp"/>
                 </div>
             </div>
         </c:when>
