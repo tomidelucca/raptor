@@ -41,8 +41,7 @@ public class WebConfig  extends WebMvcConfigurerAdapter {
 		return viewResolver;
 	}
 
-	//--TODO-- Update to postgreSQL
-	
+
 	@Bean
 	public DataSource dataSource() {
 		final SimpleDriverDataSource ds = new SimpleDriverDataSource();

@@ -116,7 +116,6 @@ public class UserJDBC implements UserDAO {
 		return isLengthValid && noEmptyParameters && isUsernameAvailable(username);
 	}
 
-	//TODO SQL injection?
 	@Override
 	public User getByUsername(final String username) {
 
@@ -136,6 +135,11 @@ public class UserJDBC implements UserDAO {
 		} catch(Exception e) { return null; } //SQLException or DataAccessException
 	}
 	
+	@Override
+	public Boolean isUsernameAvailable(String username) {
+		return getByUsername(username)==null;
+	}
+	
 	private static class UserRowMapper implements RowMapper<User> {
 
 		@Override
@@ -148,8 +152,4 @@ public class UserJDBC implements UserDAO {
         }
 	}
 
-	@Override
-	public Boolean isUsernameAvailable(String username) {
-		return getByUsername(username)==null;
-	}
 }

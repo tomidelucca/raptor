@@ -40,7 +40,6 @@ public class TweetServiceImpl implements TweetService {
 		if(t == null) {
 			//TODO handle null (invalid message)
 		} else {
-			//TODO mentions handler
 			hashtagService.register(t);
 			mentionService.register(t);
 		}
@@ -97,6 +96,14 @@ public class TweetServiceImpl implements TweetService {
 		List<Tweet> ans = tweetDAO.searchTweets(text, resultsPerPage, page);
 		if (ans == null) {
 			//TODO handle null
+		}
+		return ans;
+	}
+
+	public List<Tweet> globalFeed(int resultsPerPage, int page) {
+		List<Tweet> ans = tweetDAO.getGlobalFeed(resultsPerPage, page);
+		if(ans == null) {
+			// TODO handle null
 		}
 		return ans;
 	}
