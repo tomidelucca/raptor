@@ -25,14 +25,14 @@ public class HashtagServiceImplTest {
 
 
 @Mock
-private HashtagDAO hashtagDao;
+private HashtagDAO hashtagDAO;
 
 private HashtagServiceImpl hs;
 
 private static Tweet t;
 private static User u;
 
-private static final String MESSAGE = "tweet", ID = "12345";
+private static final String MESSAGE = "tweet #test #hola #jajaj", ID = "12345";
 
 private static final String USERNAME = "@testUser", EMAIL = "testUser@gmail.com",
 		FIRSTNAME = "test", LASTNAME = "user", UID = "12345abcd";
@@ -57,7 +57,7 @@ private static int COUNT = 1;
 		MockitoAnnotations.initMocks(this);
 		
 		hs = new HashtagServiceImpl();
-		hs.setHashtagDAO(hashtagDao);
+		hs.setHashtagDAO(hashtagDAO);
 	}
 
 	@After
@@ -70,10 +70,10 @@ private static int COUNT = 1;
 		
 		Set<String> hashtags = t.getHashtags();
 		
-		verify(hashtagDao,times(hashtags.size())).create(null,null);
+		verify(hashtagDAO,times(hashtags.size())).create(any(String.class),any(String.class));
 		
 		for (String string : hashtags) {
-			verify(hashtagDao).create(eq(string), eq(ID));
+			verify(hashtagDAO).create(eq(string), eq(ID));
 		}
 		
 	}
@@ -81,7 +81,7 @@ private static int COUNT = 1;
 	@Test
 	public void getTrendingTopicsTest() {
 		hs.getTrendingTopics(COUNT);
-		verify(hashtagDao).getTrendingTopics(eq(COUNT));
+		verify(hashtagDAO).getTrendingTopics(eq(COUNT));
 		
 	}
 

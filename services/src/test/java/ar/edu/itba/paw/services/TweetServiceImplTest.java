@@ -13,12 +13,16 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
+import java.sql.Timestamp;
+
+import ar.edu.itba.paw.models.Tweet;
 import ar.edu.itba.paw.models.User;
 import ar.edu.itba.paw.persistence.TweetDAO;
 
 public class TweetServiceImplTest {
 
 	private static final String MESSAGE = "hola soy un tweet";
+	private static final String ID = "12345";
 	
 	private static final String USERNAME = "@testUser", EMAIL = "testUser@gmail.com",
 			FIRSTNAME = "test", LASTNAME = "user", UID = "12345abcd";
@@ -30,10 +34,13 @@ public class TweetServiceImplTest {
 	private static final int RESULTSPERPAGE = 1, PAGE = 1;
 	   
 	private static User owner;
+	private static Tweet tweet;
+	private static Timestamp timestamp;
+	
 	private TweetServiceImpl ts;
 	
 	@Mock
-	private TweetDAO tweetDao;
+	private TweetDAO tweetDAO;
 	
 	@Mock
 	private HashtagService hashtagService;
@@ -42,7 +49,9 @@ public class TweetServiceImplTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		timestamp = new Timestamp(System.currentTimeMillis());
 		owner = new User(USERNAME,EMAIL,FIRSTNAME,LASTNAME,UID);
+		tweet = new Tweet(ID,MESSAGE,owner,timestamp);
 	}
 
 	@AfterClass
@@ -54,8 +63,8 @@ public class TweetServiceImplTest {
 		MockitoAnnotations.initMocks(this);
 		
         ts = new TweetServiceImpl();
-        ts.setTweetDAO(tweetDao);
-        
+        ts.setTweetDAO(tweetDAO);
+        when(tweetDAO.create(MESSAGE, owner)).thenReturn(tweet);
         ts.setHashtagService(hashtagService);
         ts.setMentionService(mentionService);
 	}
@@ -68,10 +77,10 @@ public class TweetServiceImplTest {
 	public void registerTest() {
 		
 		ts.register(MESSAGE,owner);
-		verify(tweetDao).create(eq(MESSAGE), eq(owner));
-		verify(hashtagService, never()).register(null);
-		verify(mentionService,never()).register(null);
-		
+		verify(tweetDAO).create(eq(MESSAGE), eq(owner));
+		verify(hashtagService).register(eq(tweet));
+		verify(mentionService).register(eq(tweet));
+
 	}
 
 	
@@ -79,7 +88,7 @@ public class TweetServiceImplTest {
 	public void getHashtagsTest() {
 		
 		ts.getHashtag(HASHTAG, RESULTSPERPAGE, PAGE);
-		verify(tweetDao).getTweetsByHashtag(eq(HASHTAG), eq(RESULTSPERPAGE), eq(PAGE));
+		verify(tweetDAO).getTweetsByHashtag(eq(HASHTAG), eq(RESULTSPERPAGE), eq(PAGE));
 		
 	}
 	
@@ -87,13 +96,13 @@ public class TweetServiceImplTest {
 	public void searchTweetsTest() {
 		
 		ts.searchTweets(SEARCH, RESULTSPERPAGE, PAGE);
-		verify(tweetDao).searchTweets(eq(SEARCH), eq(RESULTSPERPAGE), eq(PAGE));
+		verify(tweetDAO).searchTweets(eq(SEARCH), eq(RESULTSPERPAGE), eq(PAGE));
 	}
 	
 	@Test
 	public void getMentionsTest() {
 		ts.getMentions(UID, RESULTSPERPAGE, PAGE);
-		verify(tweetDao).getTweetsByMention(eq(UID), eq(RESULTSPERPAGE), eq(PAGE));
+		verify(tweetDAO).getTweetsByMention(eq(UID), eq(RESULTSPERPAGE), eq(PAGE));
 	}
 	
 }

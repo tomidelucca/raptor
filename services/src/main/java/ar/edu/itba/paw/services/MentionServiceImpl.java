@@ -19,6 +19,16 @@ public class MentionServiceImpl implements MentionService {
 	@Autowired
 	private UserDAO userDAO;
 	
+	
+	//test
+	void setUserDAO(UserDAO userDAO) {
+		this.userDAO=userDAO;
+	}
+	//test
+	void setMentionDAO(MentionDAO mentionDAO) {
+		this.mentionDAO=mentionDAO;
+	}
+	
 	@Override
 	public void register(Tweet tweet) {
 		Set<String> mentions = tweet.getMentions();

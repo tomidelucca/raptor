@@ -30,7 +30,7 @@ public class UserServiceImplTest {
     private UserServiceImpl us;
 
     @Mock
-    private UserDAO userDao;
+    private UserDAO UserDAO;
     
     
 	@BeforeClass
@@ -46,7 +46,7 @@ public class UserServiceImplTest {
 		MockitoAnnotations.initMocks(this);
 
         us = new UserServiceImpl();
-        us.setUserDao(userDao);
+        us.setUserDao(UserDAO);
 	}
 
 	@After
@@ -57,27 +57,27 @@ public class UserServiceImplTest {
 	public void testRegister() {
 		
 		us.register(USERNAME, PASSWORD, EMAIL, FIRSTNAME, LASTNAME);
-		verify(userDao).create(eq(USERNAME), eq(PASSWORD), eq(EMAIL), eq(FIRSTNAME), eq(LASTNAME));
+		verify(UserDAO).create(eq(USERNAME), eq(PASSWORD), eq(EMAIL), eq(FIRSTNAME), eq(LASTNAME));
        
 	}
 	
 	@Test
 	public void getUserWithUsernameTest() {
 		us.getUserWithUsername(USERNAME);
-		verify(userDao).getByUsername(eq(USERNAME));
+		verify(UserDAO).getByUsername(eq(USERNAME));
 	}
 	
 	
 	@Test
 	public void searchUsersTest() {
 		us.searchUsers(TEXT, RESULTSPERPAGE, PAGE);
-		verify(userDao).searchUsers(eq(TEXT), eq(RESULTSPERPAGE), eq(PAGE));
+		verify(UserDAO).searchUsers(eq(TEXT), eq(RESULTSPERPAGE), eq(PAGE));
 	}
 	
 	@Test
 	public void getUSerWithUsernameTest() {
 		us.getUserWithUsername(USERNAME);
-		verify(userDao).getByUsername(eq(USERNAME));
+		verify(UserDAO).getByUsername(eq(USERNAME));
 	}
 	
 }
