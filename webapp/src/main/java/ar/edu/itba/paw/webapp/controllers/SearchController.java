@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ar.edu.itba.paw.services.TweetService;
@@ -16,10 +17,10 @@ import ar.edu.itba.paw.services.UserService;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/search")
 public class SearchController {
 	
 	private final static String SEARCH = "searchResults";
-	private final static String MAP_SEARCH = "/search";
 	private final static String SEARCH_TYPE = "searchType";
 	private final static String USER_SEARCH = "userSearch";
 	private final static String TWEET_SEARCH = "tweetSearch";	
@@ -37,7 +38,7 @@ public class SearchController {
 	@Autowired
 	private TweetService tweetService;
 	
-	@RequestMapping(MAP_SEARCH)
+	@RequestMapping(method= RequestMethod.GET)
     public ModelAndView search(@RequestParam(value=SEARCH_TEXT, required=true) String text) {
 		
         final ModelAndView mav = new ModelAndView(SEARCH);
@@ -47,7 +48,7 @@ public class SearchController {
         if(text.length()==0)
         	return mav;
 
-        //TODO check no imput stream
+        //TODO check no input stream
         switch(text.charAt(0)){
         	case '#':   mav.addObject(SEARCH_TYPE, TWEET_SEARCH);
 						List<Tweet> hashtags = tweetService.getHashtag(text.substring(1),TWEET_RESULTS_PER_PAGE,1);

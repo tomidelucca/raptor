@@ -8,7 +8,7 @@
     <div class="col-md-6 col-centered">
         <h2>Create your Raptor account</h2>
         <br/>
-        <form role="form" action="/registerUser" method="post">
+        <form role="form" action="/signup" method="post">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">

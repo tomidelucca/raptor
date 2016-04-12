@@ -13,12 +13,12 @@ import ar.edu.itba.paw.services.UserService;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/signup")
 public class SignupController {
 
 	private final static String SIGNUP = "signup";
 
 	private final static String MAP_SIGNUP = "/signup";
-	private final static String MAP_REGISTER = "/registerUser";
 	private final static String MAP_USER = "/user/";
 	private final static String REDIRECT = "redirect:";
 
@@ -31,13 +31,13 @@ public class SignupController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(MAP_SIGNUP)
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView signUp() {
 		final ModelAndView mav = new ModelAndView(SIGNUP);
 		return mav;
 	}
 
-	@RequestMapping(value = MAP_REGISTER, method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public String registerAction(@RequestParam(value=PASSWORD, required=true) String password,
 								 @RequestParam(value=USERNAME, required=true) String username,
 								 @RequestParam(value=FIRSTNAME, required=true) String firstName,
