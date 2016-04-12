@@ -32,7 +32,6 @@ public class TweetServiceImpl implements TweetService {
 		if(t == null) {
 			//TODO handle null (invalid message)
 		} else {
-			//TODO mentions handler
 			hashtagService.register(t);
 			mentionService.register(t);
 		}

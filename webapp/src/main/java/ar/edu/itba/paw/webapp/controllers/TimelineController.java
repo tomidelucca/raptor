@@ -5,7 +5,6 @@ import ar.edu.itba.paw.services.HashtagService;
 import ar.edu.itba.paw.services.TweetService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +44,6 @@ public class TimelineController {
 	
 	private static final String TWEET_LIST = "tweetList";
 	private static final String TRENDS_LIST = "trendsList";
-	private static final String TAB_SELECTED = "tabSelected";
 	private static final String HEADER = "header";
 
 	private static final String MESSAGE = "message";
