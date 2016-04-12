@@ -36,6 +36,7 @@ public class TweetJDBC implements TweetDAO {
 	private static final String TIMESTAMP = "timestamp";
 	private static final String TWEETS = "tweets";
 	
+	private static final String HASHTAG = "hashtag";
 	private static final String HASHTAGS = "hashtags";
 	private static final String MENTIONS = "mentions";
 	private static final String USERS = "users";
@@ -44,6 +45,10 @@ public class TweetJDBC implements TweetDAO {
 	private static final String LAST_NAME = "lastName";
 	private static final String EMAIL = "email";
 	
+	private static final int	MESSAGE_MAX_LENGTH = 256;
+	private static final int	USER_ID_LENGTH = 12;
+	private static final int	TWEET_ID_LENGTH = 12;
+	
 	private static final String TWEET_SELECT = ID + ", " + MESSAGE + ", " + TWEETS + "." + USER_ID 
 						+ " AS " + USER_ID + ", " + TIMESTAMP + ", " + USERNAME + ", " + FIRST_NAME 
 						+ ", " + LAST_NAME + ", " + EMAIL;
@@ -51,21 +56,25 @@ public class TweetJDBC implements TweetDAO {
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
 	
 	private static final String SQL_GET_TWEETS = "select " + TWEET_SELECT + " from " + TWEETS + ", " 
-						+ USERS + " where users.userID = tweets.userID AND users.userID = ? ORDER BY " 
+						+ USERS + " where " + USERS + "." + USER_ID + " = " + TWEETS + "." + USER_ID + 
+						" AND " + USERS + "." + USER_ID + " = ? ORDER BY " 
 						+ TIMESTAMP + " DESC";
 
 	private static final String SQL_GET_TWEETS_WITH_HASHTAG = "select " + TWEET_SELECT + " from " + TWEETS + ", " 
-			+ HASHTAGS + ", " + USERS + " where hashtags.tweetID = tweets.tweetID AND tweets.userID = users.userID AND hashtag = ? ORDER BY " 
-			+ TIMESTAMP + " DESC";
+						+ HASHTAGS + ", " + USERS + " where " + HASHTAGS + "." + ID + " = " + TWEETS + "." + ID + 
+						" AND " + TWEETS + "." + USER_ID + " = " + USERS + "." + USER_ID + " AND " + HASHTAG + " = ? ORDER BY " 
+						+ TIMESTAMP + " DESC";
 	
 	private static final String SQL_GET_TWEETS_WITH_MENTION = "select " + TWEET_SELECT + " from " + TWEETS + ", " 
-			+ MENTIONS + ", " + USERS + " where " + MENTIONS + ".tweetID = tweets.tweetID AND tweets.userID = users.userID AND " + MENTIONS + ".userID = ? ORDER BY " 
-			+ TIMESTAMP + " DESC";
+						+ MENTIONS + ", " + USERS + " where " + MENTIONS + "." + ID + " = " + TWEETS + "." + ID + 
+						" AND " + TWEETS + "." + USER_ID + " = " + USERS + "." + USER_ID + 
+						" AND " + MENTIONS + "." + USER_ID + " = ? ORDER BY " 
+						+ TIMESTAMP + " DESC";
 	
 	
 	private static final String SQL_GET_TWEETS_CONTAINING = "select " + TWEET_SELECT + " from " + TWEETS 
-						+ ", " + USERS + " where users.userID = tweets.userID AND " + MESSAGE 
-						+ " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " DESC";
+						+ ", " + USERS + " where " + USERS + "." + USER_ID + " = " + TWEETS + "." + USER_ID + 
+						" AND " + MESSAGE + " LIKE ('%' || ? || '%') ORDER BY " + TIMESTAMP + " DESC";
 	
 	private final JdbcTemplate jdbcTemplate;
 	private final SimpleJdbcInsert jdbcInsert;
@@ -78,9 +87,9 @@ public class TweetJDBC implements TweetDAO {
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName(TWEETS);
 		try{
 		jdbcTemplate.execute(SQL_CREATE_TABLE + TWEETS + " ("
-				+ ID +" varchar(256) NOT NULL,"
-				+ MESSAGE +" varchar(256) NOT NULL,"
-				+ USER_ID +" varchar(256) NOT NULL," 
+				+ ID +" char(" + TWEET_ID_LENGTH + ") NOT NULL,"
+				+ MESSAGE +" varchar(" + MESSAGE_MAX_LENGTH + ") NOT NULL,"
+				+ USER_ID +" char(" + USER_ID_LENGTH + ") NOT NULL," 
 				+ TIMESTAMP +" TIMESTAMP NOT NULL,"
 				+ "PRIMARY KEY ("+ ID +"),"
 				+ "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USERS + " ON DELETE CASCADE ON UPDATE RESTRICT);");
@@ -124,7 +133,7 @@ public class TweetJDBC implements TweetDAO {
 		String id = "";
 		Random rand = new Random();
 
-		int i = 12;
+		int i = TWEET_ID_LENGTH;
 		while(i>0){
 			id += characterArray[rand.nextInt(characterArray.length)];
 			i--;

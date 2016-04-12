@@ -36,4 +36,12 @@ public interface UserDAO {
      * @return the list of users.
      */
     List<User> searchUsers(final String text, final int resultsPerPage, final int page);
+    
+    /**
+     * 
+     * @param username the tested username.
+     * @return true if username can be used by new user, false if not.
+     */
+    
+    Boolean isUsernameAvailable(final String username);
 }
