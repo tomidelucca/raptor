@@ -20,6 +20,8 @@ public class FeedController {
 
 	private static final String PAGE = "page";
 
+	private static final String FEED_WITH_PAGING = "/{" + PAGE + "}";
+	
 	private static final int 	TIMELINE_SIZE = 10;
 
 	private static final String TWEET_LIST = "tweetList";
@@ -37,7 +39,7 @@ public class FeedController {
 	@Autowired
 	private HashtagService hashtagService;
 
-	@RequestMapping("/")
+	@RequestMapping(value={"/", FEED_WITH_PAGING})
 	public ModelAndView feed(@PathVariable Map<String, String> pathVariables) {
 
 		int page = Integer.valueOf(pathVariables.getOrDefault(PAGE, "1"));
