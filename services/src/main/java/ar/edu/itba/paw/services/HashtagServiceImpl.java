@@ -15,6 +15,10 @@ public class HashtagServiceImpl implements HashtagService {
 	@Autowired
 	private HashtagDAO hashtagDAO;
 	
+	void setHashtagDAO(HashtagDAO hs) {
+		hashtagDAO = hs;
+	}
+	
 	@Override
 	public void register(final Tweet tweet) {
 		Set<String> hashtags = tweet.getHashtags();

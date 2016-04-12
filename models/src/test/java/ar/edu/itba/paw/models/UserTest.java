@@ -10,6 +10,8 @@ import org.junit.Test;
 
 public class UserTest {
 
+	private static final String USERNAME = "@testUser", EMAIL = "testUser@gmail.com",
+			FIRSTNAME = "test", LASTNAME = "user", UID = "12345abcd";
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -27,8 +29,13 @@ public class UserTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void userTest() {
+		User u = new User(USERNAME,EMAIL,FIRSTNAME,LASTNAME,UID);
+		assert(u.getUsername().equals(USERNAME));
+		assert(u.getEmail().equals(EMAIL));
+		assert(u.getFirstName().equals(FIRSTNAME));
+		assert(u.getLastName().equals(LASTNAME));
+		assert(u.getId().equals(UID));
 	}
 
 }

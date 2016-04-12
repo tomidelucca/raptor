@@ -22,6 +22,10 @@ public class TweetServiceImpl implements TweetService {
 	void setTweetDAO(TweetDAO tweetDAO) {
 		this.tweetDAO = tweetDAO;
 	}
+	//test
+	void setHashtagService(HashtagService hs) {
+		this.hashtagService = hs;
+	}
 
 	@Override
 	public Tweet register(final String msg, final User owner) {

@@ -24,6 +24,9 @@ public class UserServiceImplTest {
     							FIRSTNAME = "Juan", 
     							LASTNAME = "perez";
 
+    private static final String TEXT = "search";
+    private static final int RESULTSPERPAGE = 1, PAGE = 1;
+    
     private UserServiceImpl us;
 
     @Mock
@@ -63,4 +66,18 @@ public class UserServiceImplTest {
 		us.getUserWithUsername(USERNAME);
 		verify(userDao).getByUsername(eq(USERNAME));
 	}
+	
+	
+	@Test
+	public void searchUsersTest() {
+		us.searchUsers(TEXT, RESULTSPERPAGE, PAGE);
+		verify(userDao).searchUsers(eq(TEXT), eq(RESULTSPERPAGE), eq(PAGE));
+	}
+	
+	@Test
+	public void getUSerWithUsernameTest() {
+		us.getUserWithUsername(USERNAME);
+		verify(userDao).getByUsername(eq(USERNAME));
+	}
+	
 }
