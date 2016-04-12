@@ -37,6 +37,8 @@ public class TweetServiceImplTest {
 	
 	@Mock
 	private HashtagService hashtagService;
+	@Mock
+	private MentionService mentionService;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -55,6 +57,7 @@ public class TweetServiceImplTest {
         ts.setTweetDAO(tweetDao);
         
         ts.setHashtagService(hashtagService);
+        ts.setMentionService(mentionService);
 	}
 
 	@After
@@ -67,7 +70,7 @@ public class TweetServiceImplTest {
 		ts.register(MESSAGE,owner);
 		verify(tweetDao).create(eq(MESSAGE), eq(owner));
 		verify(hashtagService, never()).register(null);
-		
+		verify(mentionService,never()).register(null);
 		
 	}
 
@@ -86,4 +89,11 @@ public class TweetServiceImplTest {
 		ts.searchTweets(SEARCH, RESULTSPERPAGE, PAGE);
 		verify(tweetDao).searchTweets(eq(SEARCH), eq(RESULTSPERPAGE), eq(PAGE));
 	}
+	
+	@Test
+	public void getMentionsTest() {
+		ts.getMentions(UID, RESULTSPERPAGE, PAGE);
+		verify(tweetDao).getTweetsByMention(eq(UID), eq(RESULTSPERPAGE), eq(PAGE));
+	}
+	
 }

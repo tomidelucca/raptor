@@ -29,6 +29,10 @@ public class TweetServiceImpl implements TweetService {
 	void setHashtagService(HashtagService hs) {
 		this.hashtagService = hs;
 	}
+	//test
+	void setMentionService(MentionService ms) {
+		this.mentionService = ms;
+	}
 
 	@Override
 	public Tweet register(final String msg, final User owner) {
