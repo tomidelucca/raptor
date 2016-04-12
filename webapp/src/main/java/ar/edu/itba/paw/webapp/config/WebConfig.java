@@ -42,7 +42,7 @@ public class WebConfig  extends WebMvcConfigurerAdapter {
 	}
 
 	//--TODO-- Update to postgreSQL
-	/*
+	
 	@Bean
 	public DataSource dataSource() {
 		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
@@ -53,7 +53,8 @@ public class WebConfig  extends WebMvcConfigurerAdapter {
 
 		return ds;
 	}
-	*/
+	
+	/*
 	@Bean
 	public DataSource dataSource() {
 		final DriverManagerDataSource ds = new DriverManagerDataSource();
@@ -64,4 +65,5 @@ public class WebConfig  extends WebMvcConfigurerAdapter {
 
 		return ds;
 	}
+	*/
 }
