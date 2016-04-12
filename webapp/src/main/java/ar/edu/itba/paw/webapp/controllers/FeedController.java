@@ -30,6 +30,11 @@ public class FeedController {
 	private static final int TRENDING_TOPIC_LIMIT = 5;
 
 	// THIS IS A HACK
+	/*
+	 * 
+	 * First creates User table.
+	 * 
+	 * */
 	@Autowired
 	private UserService userService;
 
