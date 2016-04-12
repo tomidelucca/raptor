@@ -46,6 +46,10 @@ public class SignupController {
 
         User user = userService.register(username, password, email, firstName, lastName);
 
-        return REDIRECT + MAP_USER + user.getUsername();
+        if(user == null){
+        	return REDIRECT + MAP_SIGNUP;
+        }else{
+        	return REDIRECT + MAP_USER + user.getUsername();
+        }
     }
 }

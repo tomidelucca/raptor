@@ -34,6 +34,13 @@ public class UserJDBC implements UserDAO {
 	private static final String ID = "userID";
 	private static final String USERS = "users";
 	
+	private static final int	USERNAME_MAX_LENGTH = 100;
+	private static final int	PASSWORD_MAX_LENGTH = 100;
+	private static final int	EMAIL_MAX_LENGTH = 100;
+	private static final int	FIRSTNAME_MAX_LENGTH = 100;
+	private static final int	LASTNAME_MAX_LENGTH = 100;
+	private static final int	ID_LENGTH = 12;
+	
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS ";
 	private static final String SQL_GET_BY_USERNAME = "SELECT * FROM " + USERS + " WHERE " + USERNAME + " = ? LIMIT 1";
 	private static final String SQL_GET_USERS_CONTAINING = "select * from " + USERS + " where " + USERNAME + " LIKE ('%' || ? || '%')";
@@ -49,12 +56,12 @@ public class UserJDBC implements UserDAO {
 		jdbcInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName(USERS);
 		try {
 		jdbcTemplate.execute(SQL_CREATE_TABLE + USERS +" ("
-				+ USERNAME + " varchar(100) NOT NULL," 
-				+ PASSWORD + " varchar(100) NOT NULL,"
-				+ EMAIL + " varchar(100),"
-				+ FIRSTNAME + " varchar(100) NOT NULL,"
-				+ LASTNAME + " varchar(100) NOT NULL,"
-				+ ID + " varchar(100) NOT NULL,"
+				+ USERNAME + " varchar(" + USERNAME_MAX_LENGTH + ") NOT NULL," 
+				+ PASSWORD + " varchar(" + PASSWORD_MAX_LENGTH + ") NOT NULL,"
+				+ EMAIL + " varchar(" + EMAIL_MAX_LENGTH + ") NOT NULL,"
+				+ FIRSTNAME + " varchar(" + FIRSTNAME_MAX_LENGTH + ") NOT NULL,"
+				+ LASTNAME + " varchar(" + LASTNAME_MAX_LENGTH + ") NOT NULL,"
+				+ ID + " char(" + ID_LENGTH + ") NOT NULL,"
 				+ "PRIMARY KEY ("+ ID +"));");
 		} catch (DataAccessException e) {
 			//TODO db error
@@ -73,7 +80,7 @@ public class UserJDBC implements UserDAO {
 		String userId = "";
 		Random rand = new Random();
 
-		int i = 12;
+		int i = ID_LENGTH;
 		while(i>0){
 			userId += characterArray[rand.nextInt(characterArray.length)];
 			i--;
@@ -103,7 +110,10 @@ public class UserJDBC implements UserDAO {
 	}
 	
 	private boolean isValidUser(final String username, final String password, final String email, final String firstName, final String lastName) {
-		return (username.length() <= 256 && password.length() <= 256 && email.length() <= 256 && firstName.length() <= 256 && lastName.length() <= 256);
+		boolean isLengthValid = (username.length() <= USERNAME_MAX_LENGTH && password.length() <= PASSWORD_MAX_LENGTH && email.length() <= PASSWORD_MAX_LENGTH && firstName.length() <= FIRSTNAME_MAX_LENGTH && lastName.length() <= LASTNAME_MAX_LENGTH);
+		boolean noEmptyParameters = (username.length() > 0 && password.length() > 0 && email.length() > 0 && firstName.length() > 0 && lastName.length() > 0);
+		
+		return isLengthValid && noEmptyParameters && isUsernameAvailable(username);
 	}
 
 	//TODO SQL injection?
@@ -136,5 +146,10 @@ public class UserJDBC implements UserDAO {
                 		rs.getString(LASTNAME),
                 		rs.getString(ID));
         }
+	}
+
+	@Override
+	public Boolean isUsernameAvailable(String username) {
+		return getByUsername(username)==null;
 	}
 }
