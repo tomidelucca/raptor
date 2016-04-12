@@ -1,8 +1,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- Params needed: tweetList: List, tweetListTitle: String --%>
+<%-- Params needed: tweetList: List, tweetListTitle: String || header: List<Map<String, Object>> --%>
 <div class="panel panel-raptor">
     <div class="panel-heading timeline-heading">
-        <a class="active" href="#">${requestScope.tweetListTitle}</a>
+        <c:choose>
+            <c:when test="${requestScope.header == null}">
+                <a class="active" href="#">${requestScope.tweetListTitle}</a>
+            </c:when>
+            <c:otherwise>
+                <c:forEach items="${requestScope.header}" var="item">
+                    <a <c:if test="${item['active']}">class="active"</c:if> href="${item['link']}">
+                            ${item['title']}</a>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
     <c:forEach items="${requestScope.tweetList}" var="tweet">
         <div class="panel panel-rawr">
