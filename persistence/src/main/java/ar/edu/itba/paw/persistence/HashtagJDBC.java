@@ -2,8 +2,6 @@ package ar.edu.itba.paw.persistence;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,15 +27,15 @@ public class HashtagJDBC implements HashtagDAO {
 	private static final String HASHTAG = "hashtag";
 	private static final String TWEET_ID = "tweetID";
 	private static final String TWEETS = "tweets";
-	private static final String TIME = "timestamp";
+	private static final String TIMESTAMP = "timestamp";
 	
-	private static final int INTERVAL = 3600; // in seconds
+	private static final int INTERVAL = 60000; // in seconds
 		
 	private static final String SQL_CREATE_TABLE = "CREATE TABLE IF NOT EXISTS "; 
-	private static final String SQL_GET_TRENDINGS = "SELECT " + HASHTAG + ", COUNT (" + HASHTAG + ") as hCount, MAX(" + TIME + ") as maxTime" +
+	private static final String SQL_GET_TRENDINGS = "SELECT " + HASHTAG + ", COUNT (" + HASHTAG + ") as hCount, MAX(" + TIMESTAMP + ") as maxTime" +
 													" FROM " + HASHTAGS + ", " + TWEETS + 
 													" WHERE " + TWEETS + "." + TWEET_ID + " = " + HASHTAGS + "." + TWEET_ID + 
-													" AND (UNIX_TIMESTAMP(?)-UNIX_TIMESTAMP(" + TIME + ")) <= "+ INTERVAL +
+													" AND (UNIX_TIMESTAMP(CURRENT_TIMESTAMP)-UNIX_TIMESTAMP(" + TIMESTAMP + ")) <= "+ INTERVAL +
 													" GROUP BY " + HASHTAG + " ORDER BY hCount DESC, maxTime DESC LIMIT ?";
 
 	private final JdbcTemplate jdbcTemplate;
@@ -76,7 +74,7 @@ public class HashtagJDBC implements HashtagDAO {
 	@Override
 	public List<String> getTrendingTopics(final int count) {
 		try{
-			return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper, new Timestamp(new Date().getTime()), count);
+			return jdbcTemplate.query(SQL_GET_TRENDINGS, hashtagRowMapper, count); // new Timestamp(new Date().getTime()),
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			return null;

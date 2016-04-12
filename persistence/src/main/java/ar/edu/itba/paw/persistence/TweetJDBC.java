@@ -49,7 +49,7 @@ public class TweetJDBC implements TweetDAO {
 	private static final int	USER_ID_LENGTH = 12;
 	private static final int	TWEET_ID_LENGTH = 12;
 	
-	private static final String TWEET_SELECT = ID + ", " + MESSAGE + ", " + TWEETS + "." + USER_ID 
+	private static final String TWEET_SELECT = TWEETS + "." + ID + ", " + MESSAGE + ", " + TWEETS + "." + USER_ID
 						+ " AS " + USER_ID + ", " + TIMESTAMP + ", " + USERNAME + ", " + FIRST_NAME 
 						+ ", " + LAST_NAME + ", " + EMAIL;
 	
@@ -151,7 +151,9 @@ public class TweetJDBC implements TweetDAO {
 	public List<Tweet> getTweetsByHashtag(final String hashtag, final int resultsPerPage, final int page) {
 		try{
 			return jdbcTemplate.query(SQL_GET_TWEETS_WITH_HASHTAG + " LIMIT "+ resultsPerPage + " OFFSET " + (page-1)*resultsPerPage, tweetRowMapper, hashtag);
-		}catch(Exception e) { return null; } //DataAccessException or SQLException
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			return null; } //DataAccessException or SQLException
 	}
 	
 	@Override

@@ -42,7 +42,7 @@ public class WebConfig  extends WebMvcConfigurerAdapter {
 	}
 
 
-	@Bean
+	/*@Bean
 	public DataSource dataSource() {
 		final SimpleDriverDataSource ds = new SimpleDriverDataSource();
 		ds.setDriverClass(JDBCDriver.class);
@@ -51,18 +51,17 @@ public class WebConfig  extends WebMvcConfigurerAdapter {
 		ds.setPassword("");
 
 		return ds;
-	}
+	}*/
 	
-	/*
+
 	@Bean
 	public DataSource dataSource() {
 		final DriverManagerDataSource ds = new DriverManagerDataSource();
 		ds.setDriverClassName("org.postgresql.Driver");
-		ds.setUrl("jdbc:postgresql://25.97.255.215:5432/raptor");
-		ds.setUsername("postgres");
-		ds.setPassword("raptor");
+		ds.setUrl("jdbc:postgresql://tantor.db.elephantsql.com:5432/bevoasov");
+		ds.setUsername("bevoasov");
+		ds.setPassword("hJmre4hNt9KHH44PVLNBH44HmJJn6DVh");
 
 		return ds;
 	}
-	*/
 }
