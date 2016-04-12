@@ -85,4 +85,13 @@ public interface TweetService {
 	 * @return The recovered list.
 	 */
 	public List<Tweet> searchTweets(final String text, final int resultsPerPage, final int page);
+
+	/**
+	 * Get a list of the latest tweets in the whole network
+	 *
+	 * @param resultsPerPage limit number of tweets per page
+	 * @param page number of page needed
+     * @return
+     */
+	public List<Tweet> globalFeed(final int resultsPerPage, final int page);
 }

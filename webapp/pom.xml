@@ -1,56 +1,56 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>ar.edu.itba.paw</groupId>
+        <artifactId>TPRaptor</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <groupId>ar.edu.itba.paw</groupId>
-    <artifactId>TPRaptor</artifactId>
+    <artifactId>webapp</artifactId>
     <version>1.0-SNAPSHOT</version>
-  </parent>
-  <groupId>ar.edu.itba.paw</groupId>
-  <artifactId>webapp</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
-  <name>webapp Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+    <packaging>war</packaging>
+    <name>webapp Maven Webapp</name>
+    <url>http://maven.apache.org</url>
 
-  <dependencies>
-    <dependency>
-     <groupId>org.springframework</groupId>
-     <artifactId>spring-webmvc</artifactId>
-    </dependency>
-    <dependency>
-     <groupId>ar.edu.itba.paw</groupId>
-     <artifactId>interfaces</artifactId>
-     <version>${project.parent.version}</version>
-    </dependency>
-    <dependency>
-     <groupId>ar.edu.itba.paw</groupId>
-     <artifactId>services</artifactId>
-     <version>${project.parent.version}</version>
-     <scope>runtime</scope>
-    </dependency>
-    <dependency>
-     <groupId>javax.servlet</groupId>
-     <artifactId>servlet-api</artifactId>
-    </dependency>
-    <dependency>
-     <groupId>javax.servlet</groupId>
-     <artifactId>jstl</artifactId>
-    </dependency>
-     <dependency>
-      <groupId>ar.edu.itba.paw</groupId>
-      <artifactId>persistence</artifactId>
-      <version>${project.parent.version}</version>
-      <!--<scope>runtime</scope>-->
-    </dependency>
-    <dependency>
-     <groupId>org.hsqldb</groupId>
-     <artifactId>hsqldb</artifactId>
-    </dependency>
-  </dependencies>
-  <build>
-    <finalName>webapp</finalName>
-  </build>
- 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ar.edu.itba.paw</groupId>
+            <artifactId>interfaces</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ar.edu.itba.paw</groupId>
+            <artifactId>services</artifactId>
+            <version>${project.parent.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ar.edu.itba.paw</groupId>
+            <artifactId>persistence</artifactId>
+            <version>${project.parent.version}</version>
+            <!--<scope>runtime</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>webapp</finalName>
+    </build>
+
 </project>
