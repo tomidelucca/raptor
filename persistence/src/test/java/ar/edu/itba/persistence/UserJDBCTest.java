@@ -21,7 +21,7 @@ import ar.edu.itba.paw.persistence.UserJDBC;
 
 public class UserJDBCTest {
 
-	private UserJDBC userJDBC;
+	/*private UserJDBC userJDBC;
 	private DataSource ds;
 	private static final String USERNAME = "@raptorTest", PASSWORD = "raptor", EMAIL= "raptor@gmail.com ", FIRSTNAME = "rap", LASTNAME = "tor";
 	
@@ -109,6 +109,6 @@ public class UserJDBCTest {
 		search = userJDBC.searchUsers(UNAME1, RESULTSPERPAGE, PAGE);
 		
 		
-	}
+	}*/
 	
 }

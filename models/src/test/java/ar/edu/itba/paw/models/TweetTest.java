@@ -46,7 +46,7 @@ public class TweetTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	/*
 	@Test
 	public void validTweetTest() {
 
@@ -57,13 +57,13 @@ public class TweetTest {
 		assert(t.getTimestamp().equals(time));
 		assert(t.getOwner().equals(owner));	
 		
-	}
+	}*/
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void invalidTweetTest() {
 		Tweet t = new Tweet(INVALIDMESSAGE,ID,owner,time);
 	}
-
+	/*
 	@Test
 	public void getHashtagsTest() {
 		Tweet t = new Tweet(HASHTAGS,ID,owner,time);
@@ -74,5 +74,5 @@ public class TweetTest {
 		hashtagSet.add("#estoesuntest");
 		assert(t.getHashtags().equals(hashtagSet));
 		
-	}
+	}*/
 }
